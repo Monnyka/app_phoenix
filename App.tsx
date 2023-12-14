@@ -24,7 +24,7 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    // Font is still loading, you can show a loading screen or message
+    // Font is still loading, you can show a loading screen or messages
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator animating={true} color={MD2Colors.red800} />
