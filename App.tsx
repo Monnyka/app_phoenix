@@ -1,5 +1,18 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useFonts } from "expo-font";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
@@ -9,9 +22,24 @@ import { createMaterialBottomTabNavigator } from "react-native-paper/react-navig
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import BottomSheet, {
+  BottomSheetTextInput,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
+import CreateTask from "./Layout/CreateTask";
 
 export default function App() {
   const Tab = createMaterialBottomTabNavigator();
+  const sheetRef = useRef<BottomSheet>(null);
+  // variables
+  const snapPoints = useMemo(() => ["50%"], []);
+
+  // callbacks
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
+
   const [fontsLoaded] = useFonts({
     montserratregular: require("./assets/fonts/Montserrat-Regular.ttf"),
     montserratitalic: require("./assets/fonts/Montserrat-Italic.ttf"),
@@ -33,50 +61,63 @@ export default function App() {
     );
   }
 
+  const openBottomSheet = () => {
+    sheetRef.current?.expand();
+  };
+
   return (
-    // <View style={styles.container}>
-    //   <Text style={{ fontFamily: "crimsonprobold", fontSize: 35 }}>
-    //     Task for today
-    //   </Text>
-    //   <Text style={{ fontFamily: "montserratbold", fontSize: 16 }}>
-    //     Typescript app version 1.0.0
-    //   </Text>
-    // </View>
-    <SafeAreaProvider>
-      <StatusBar backgroundColor="#4CAF4F00" hidden={false} />
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen
-            name="Task"
-            component={Task}
-            options={{
-              tabBarLabel: "Task",
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons
-                  name="book-check-outline"
-                  color={color}
-                  size={26}
-                />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Settings"
-            component={Settings}
-            options={{
-              tabBarLabel: "Project",
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons
-                  name="all-inclusive"
-                  color={color}
-                  size={26}
-                />
-              ),
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <StatusBar backgroundColor="#4CAF4F00" hidden={false} />
+        <NavigationContainer>
+          <Tab.Navigator>
+            <Tab.Screen
+              name="Task"
+              options={{
+                tabBarIcon: ({ color }: any) => (
+                  <MaterialCommunityIcons
+                    name="book-check-outline"
+                    color={color}
+                    size={26}
+                  />
+                ),
+              }}
+            >
+              {() => <Task onPress={openBottomSheet} />}
+            </Tab.Screen>
+
+            <Tab.Screen
+              name="Settings"
+              component={Settings}
+              options={{
+                tabBarLabel: "Project",
+                tabBarIcon: ({ color }) => (
+                  <MaterialCommunityIcons
+                    name="all-inclusive"
+                    color={color}
+                    size={26}
+                  />
+                ),
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+
+        <BottomSheet
+          ref={sheetRef}
+          index={-1}
+          snapPoints={snapPoints}
+          onChange={handleSheetChanges}
+          enablePanDownToClose={true}
+        >
+          <BottomSheetView>
+            <KeyboardAvoidingView>
+              <CreateTask />
+            </KeyboardAvoidingView>
+          </BottomSheetView>
+        </BottomSheet>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 

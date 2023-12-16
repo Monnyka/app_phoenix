@@ -1,10 +1,4 @@
-import {
-  FlatList,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, View, Dimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from "expo-linear-gradient";
@@ -17,7 +11,7 @@ import {
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Task = () => {
+export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [checked, setChecked] = React.useState(false);
@@ -63,7 +57,6 @@ const Task = () => {
       <View style={styles.item}>
         <TouchableRipple
           onPress={() => console.log("Pressed")}
-          // rippleColor="rgba(0, 0, 0, .32)"
           borderless
           style={{ padding: 16, borderRadius: 16 }}
         >
@@ -72,7 +65,6 @@ const Task = () => {
               style={{
                 flexDirection: "row",
                 alignItems: "center",
-                flexWrap: "wrap",
                 //backgroundColor: "#458989",
               }}
             >
@@ -88,12 +80,12 @@ const Task = () => {
                   fontFamily: "poppinssemibold",
                   fontSize: 14,
                   textTransform: "capitalize",
+                  paddingEnd: 22,
                 }}
+                numberOfLines={1}
               >
                 {item.name}
               </Text>
-
-              <View></View>
             </View>
             <Text
               style={{
@@ -105,7 +97,7 @@ const Task = () => {
                 fontSize: 13,
                 textTransform: "capitalize",
               }}
-              numberOfLines={1}
+              numberOfLines={2}
             >
               {item.description}
             </Text>
@@ -200,20 +192,24 @@ const Task = () => {
         <FlatList
           style={{ marginTop: 12 }}
           data={data}
-          contentContainerStyle={{ paddingBottom: 0 }}
+          contentContainerStyle={{ paddingBottom: 218 }}
+          showsVerticalScrollIndicator={false}
           renderItem={renderItem}
         />
-        <FAB
-          icon="pencil-plus-outline"
-          style={styles.fab}
-          onPress={() => console.log("Fab is Pressed")}
-        />
       </SafeAreaView>
+      <FAB
+        icon="pencil-plus-outline"
+        color="#ffff"
+        label="Add Task"
+        style={styles.fab}
+        onPress={onPress}
+      />
     </LinearGradient>
   );
-};
+}
 
-export default Task;
+const { width, height } = Dimensions.get("window");
+console.log(width + " and " + height);
 
 const styles = StyleSheet.create({
   container: {
@@ -227,6 +223,7 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
+    backgroundColor: "#69CA46",
   },
   item: {
     backgroundColor: "#C1D9FD",
