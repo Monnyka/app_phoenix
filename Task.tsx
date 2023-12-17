@@ -1,20 +1,32 @@
-import { FlatList, StyleSheet, Text, View, Dimensions } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  RefreshControl,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from "expo-linear-gradient";
 import {
+  ActivityIndicator,
   Avatar,
   Button,
   Checkbox,
   FAB,
+  MD2Colors,
+  ProgressBar,
   TouchableRipple,
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [checked, setChecked] = React.useState(false);
+
   const getTasks = async () => {
     try {
       const response = await fetch("https://uat.monnyka.top/api/v1/tasks");
@@ -37,7 +49,6 @@ export default function Task({ onPress }: any) {
       if (request.status === 200) {
         // Remove the deleted item from the data array
         setData((prevData) => prevData.filter((item) => item._id !== id));
-        //onToggleSnackBar();
       }
 
       const jsons = await request.json();
@@ -189,13 +200,38 @@ export default function Task({ onPress }: any) {
             Completed
           </Button>
         </View>
-        <FlatList
-          style={{ marginTop: 12 }}
-          data={data}
-          contentContainerStyle={{ paddingBottom: 218 }}
-          showsVerticalScrollIndicator={false}
-          renderItem={renderItem}
-        />
+        {isLoading ? (
+          <View
+            style={{
+              marginTop: 20,
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <ActivityIndicator
+              animating={true}
+              size={"large"}
+              color={"#69CA46"}
+            />
+            <Text style={{ fontFamily: "poppinsregular", fontSize: 18 }}>
+              LOADING DATA
+            </Text>
+          </View>
+        ) : (
+          <View style={{ height: "74%" }}>
+            {data ? (
+              <FlatList
+                style={{ marginTop: 12 }}
+                data={data}
+                contentContainerStyle={{ paddingBottom: "26%" }}
+                showsVerticalScrollIndicator={false}
+                renderItem={renderItem}
+              />
+            ) : (
+              <Text>No data</Text>
+            )}
+          </View>
+        )}
       </SafeAreaView>
       <FAB
         icon="pencil-plus-outline"
@@ -207,9 +243,6 @@ export default function Task({ onPress }: any) {
     </LinearGradient>
   );
 }
-
-const { width, height } = Dimensions.get("window");
-console.log(width + " and " + height);
 
 const styles = StyleSheet.create({
   container: {
