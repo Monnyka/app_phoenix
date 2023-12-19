@@ -1,6 +1,13 @@
 import { router } from "expo-router";
 import * as React from "react";
-import { SafeAreaView, StatusBar, View, Text, StyleSheet } from "react-native";
+import {
+  SafeAreaView,
+  StatusBar,
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+} from "react-native";
 import { Appbar } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -41,15 +48,17 @@ const Setting = () => {
             }}
           >
             <Text style={{ fontFamily: "poppinsregular" }}>Profile</Text>
-            <Text
-              style={{
-                fontFamily: "poppinssemibold",
-                alignContent: "flex-end",
-                color: "#42802C",
-              }}
-            >
-              Update
-            </Text>
+            <Pressable onPress={() => router.push("./profile")}>
+              <Text
+                style={{
+                  fontFamily: "poppinssemibold",
+                  alignContent: "flex-end",
+                  color: "#42802C",
+                }}
+              >
+                Update
+              </Text>
+            </Pressable>
           </View>
 
           {/* Setting Item App Version*/}

@@ -23,6 +23,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
+import { FontDisplay } from "expo-font";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
@@ -107,20 +108,22 @@ export default function Task({ onPress }: any) {
                 {item.name}
               </Text>
             </View>
-            <Text
-              style={{
-                marginStart: 8,
-                marginBottom: 8,
-                marginEnd: 5,
-                color: "#4B4A4A",
-                fontFamily: "poppinsregular",
-                fontSize: 13,
-                textTransform: "capitalize",
-              }}
-              numberOfLines={2}
-            >
-              {item.description}
-            </Text>
+            {item.description ? (
+              <Text
+                style={{
+                  marginStart: 8,
+                  marginBottom: 8,
+                  marginEnd: 5,
+                  color: "#4B4A4A",
+                  fontFamily: "poppinsregular",
+                  fontSize: 13,
+                  textTransform: "capitalize",
+                }}
+                numberOfLines={2}
+              >
+                {item.description}
+              </Text>
+            ) : null}
           </View>
         </TouchableRipple>
       </View>
@@ -201,7 +204,7 @@ export default function Task({ onPress }: any) {
             onPress={() => console.log("Pressed")}
             style={{ marginRight: 10 }}
           >
-            Pending
+            <Text style={{ fontFamily: "poppinsregular" }}>Pending</Text>
           </Button>
           <Button
             icon="check-decagram"
@@ -210,7 +213,7 @@ export default function Task({ onPress }: any) {
             textColor="#414141"
             onPress={() => console.log("Pressed")}
           >
-            Completed
+            <Text style={{ fontFamily: "poppinsregular" }}>Pending</Text>
           </Button>
         </View>
         {isLoading ? (
@@ -270,6 +273,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: "#69CA46",
+    fontFamily: "poppinsregular",
   },
   item: {
     backgroundColor: "#C1D9FD",
