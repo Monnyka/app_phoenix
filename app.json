@@ -2,6 +2,7 @@
   "expo": {
     "name": "Phoenix",
     "slug": "Phoenix",
+    "scheme": "Phoenix",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.nyka.Phoenix"
@@ -32,6 +31,7 @@
       "eas": {
         "projectId": "e8147d1e-d410-42ea-99f4-36cda15884df"
       }
-    }
+    },
+    "plugins": ["expo-router"]
   }
 }

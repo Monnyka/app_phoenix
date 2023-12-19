@@ -8,3 +8,7 @@ emulator -avd Pixel_7_Pro
 
 Install the latest EAS CLI
 npm install -g eas-cli
+
+## #Build Local (macOS, linux)
+
+eas build --platform android --local

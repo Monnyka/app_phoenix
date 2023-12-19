@@ -5,6 +5,7 @@ import {
   View,
   Dimensions,
   RefreshControl,
+  Pressable,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -20,12 +21,20 @@ import {
   TouchableRipple,
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ScrollView } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
+import { router } from "expo-router";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [checked, setChecked] = React.useState(false);
+
+  //navigation instance
+  const navigation = useNavigation();
+
+  const handleAvatarPress = () => {
+    // Navigate to the "Settings" screen when the avatar is pressed
+  };
 
   const getTasks = async () => {
     try {
@@ -136,7 +145,9 @@ export default function Task({ onPress }: any) {
               flexDirection: "row",
             }}
           >
-            <Avatar.Image size={45} source={require("./assets/icon.png")} />
+            <Pressable onPress={() => router.push("./profile")}>
+              <Avatar.Image size={45} source={require("./assets/icon.png")} />
+            </Pressable>
             <View
               style={{
                 flexDirection: "column",
@@ -158,7 +169,9 @@ export default function Task({ onPress }: any) {
               </Text>
             </View>
           </View>
-          <Avatar.Icon size={35} icon={"cog"} />
+          <Pressable onPress={() => router.push("/settings")}>
+            <Avatar.Icon size={35} icon={"cog"} />
+          </Pressable>
         </View>
         <Text
           style={{

@@ -3,7 +3,8 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Avatar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-const Settings = () => {
+
+const Project = () => {
   return (
     <SafeAreaView style={{ padding: 20 }}>
       <StatusBar backgroundColor="#4CAF5000" hidden={false} />
@@ -66,7 +67,7 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default Project;
 
 const styles = StyleSheet.create({
   container: {
