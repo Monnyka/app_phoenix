@@ -12,3 +12,7 @@ npm install -g eas-cli
 ## #Build Local (macOS, linux)
 
 eas build --platform android --local
+
+## #React Native Snippit
+
+rnfs

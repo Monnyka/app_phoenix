@@ -1,69 +1,75 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Avatar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TextHeader from "./component/TextHeader";
+import { router } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Project = () => {
   return (
-    <SafeAreaView style={{ padding: 20 }}>
-      <StatusBar backgroundColor="#4CAF5000" hidden={false} />
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
+    <LinearGradient
+      // Background Linear Gradient
+      colors={["#98BEFA", "#2756FF"]}
+      style={{ flex: 1 }}
+    >
+      <SafeAreaView
+        //add edges to remote the unwated padding at the bottom
+        edges={["top", "left", "right"]}
+        style={{ paddingTop: 16, paddingHorizontal: 14, flex: 1 }}
       >
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: "#ffff",
+            justifyContent: "space-between",
           }}
         >
-          <Avatar.Image size={45} source={require("./assets/icon.png")} />
           <View
             style={{
-              flexDirection: "column",
-              marginLeft: 8,
-              justifyContent: "center",
+              flexDirection: "row",
             }}
           >
-            <Text
+            <Pressable onPress={() => router.push("./profile")}>
+              <Avatar.Image size={45} source={require("./assets/icon.png")} />
+            </Pressable>
+            <View
               style={{
-                fontFamily: "montserratbold",
-                color: "#626262",
-                fontSize: 12,
+                flexDirection: "column",
+                marginLeft: 8,
+                justifyContent: "center",
               }}
             >
-              Welcome back, Have a nice day!
-            </Text>
-            <Text style={{ fontFamily: "montserratbold", fontSize: 16 }}>
-              Monnyka Pin
-            </Text>
+              <Text
+                style={{
+                  fontFamily: "montserratbold",
+                  color: "#626262",
+                  fontSize: 12,
+                }}
+              >
+                Welcome back, Have a nice day!
+              </Text>
+              <Text style={{ fontFamily: "montserratbold", fontSize: 16 }}>
+                Monnyka Pin
+              </Text>
+            </View>
           </View>
+          <Pressable onPress={() => router.push("/settings")}>
+            <Avatar.Icon size={35} icon={"cog"} />
+          </Pressable>
         </View>
-        <Avatar.Image size={35} source={require("./assets/icon.png")} />
-      </View>
-      <Text
-        style={{
-          marginTop: 30,
-          fontFamily: "crimsonprobold",
-          fontSize: 36,
-          color: "#01044B",
-        }}
-      >
-        Project
-      </Text>
-      <Text
-        style={{
-          fontFamily: "montserratregular",
-          fontSize: 14,
-          color: "#01044B",
-        }}
-      >
-        Manage your pending task
-      </Text>
-    </SafeAreaView>
+        <TextHeader style={{ marginTop: 30 }}>Project</TextHeader>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={{ color: "red" }}>Coming Soon</Text>
+        </View>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 

@@ -8,7 +8,6 @@ import {
   Pressable,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   ActivityIndicator,
@@ -23,6 +22,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
+import TextHeader from "./component/TextHeader";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
@@ -98,7 +98,6 @@ export default function Task({ onPress }: any) {
                   fontFamily: "poppinssemibold",
                   fontSize: 14,
                   textTransform: "capitalize",
-                  marginTop: 4,
                 }}
                 numberOfLines={1}
               >
@@ -135,7 +134,7 @@ export default function Task({ onPress }: any) {
       <SafeAreaView
         //add edges to remote the unwated padding at the bottom
         edges={["top", "left", "right"]}
-        style={{ paddingTop: 8, paddingHorizontal: 14, flex: 1 }}
+        style={{ paddingTop: 16, paddingHorizontal: 14, flex: 1 }}
       >
         <View
           style={{
@@ -176,16 +175,7 @@ export default function Task({ onPress }: any) {
             <Avatar.Icon size={35} icon={"cog"} />
           </Pressable>
         </View>
-        <Text
-          style={{
-            marginTop: 30,
-            fontFamily: "crimsonprobold",
-            fontSize: 36,
-            color: "#01044B",
-          }}
-        >
-          Task for today
-        </Text>
+        <TextHeader style={{ marginTop: 30 }}>Task for today</TextHeader>
         <Text
           style={{
             fontFamily: "poppinsregular",
@@ -237,7 +227,7 @@ export default function Task({ onPress }: any) {
           <View
             style={{
               //backgroundColor: "#69CA46",
-              marginTop: 20,
+              marginTop: 16,
               flex: 1,
             }}
           >

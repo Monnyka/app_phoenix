@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useRef } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { Keyboard, StyleSheet, Text, View } from "react-native";
 import { useFonts } from "expo-font";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import Task from "../Task";
@@ -14,10 +14,27 @@ import Project from "../Project";
 const HomePage = () => {
   const Tab = createMaterialBottomTabNavigator();
   const sheetRef = useRef<BottomSheet>(null);
+
   // variables
   const snapPoints = useMemo(() => ["50%"], []);
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
+  }, []);
+
+  useEffect(() => {
+    // Add a listener for keyboard dismissal
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        // Close the BottomSheet when the keyboard is dismissed
+        sheetRef.current?.snapToIndex(0);
+      }
+    );
+
+    // Remove the listener when the component unmounts
+    return () => {
+      keyboardDidHideListener.remove();
+    };
   }, []);
 
   const [fontsLoaded] = useFonts({

@@ -68,7 +68,7 @@ const CreateTask = () => {
       </Text>
 
       <BottomSheetTextInput
-        placeholder="Title"
+        placeholder="Task Title"
         value={title}
         onChangeText={(title) => setTitle(title)}
         style={{
