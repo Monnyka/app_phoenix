@@ -23,7 +23,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
-import { FontDisplay } from "expo-font";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
@@ -82,11 +81,13 @@ export default function Task({ onPress }: any) {
           style={{ padding: 16, borderRadius: 16 }}
         >
           <View>
+            {/* Title task item */}
             <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
                 //backgroundColor: "#458989",
+                paddingEnd: 30,
               }}
             >
               <Checkbox.Android
@@ -101,7 +102,7 @@ export default function Task({ onPress }: any) {
                   fontFamily: "poppinssemibold",
                   fontSize: 14,
                   textTransform: "capitalize",
-                  paddingEnd: 22,
+                  marginTop: 4,
                 }}
                 numberOfLines={1}
               >
