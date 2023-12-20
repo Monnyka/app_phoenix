@@ -32,10 +32,6 @@ export default function Task({ onPress }: any) {
   //navigation instance
   const navigation = useNavigation();
 
-  const handleAvatarPress = () => {
-    // Navigate to the "Settings" screen when the avatar is pressed
-  };
-
   const getTasks = async () => {
     try {
       const response = await fetch("https://uat.monnyka.top/api/v1/tasks");
@@ -136,8 +132,11 @@ export default function Task({ onPress }: any) {
       colors={["#98BEFA", "#2756FF"]}
       style={{ flex: 1 }}
     >
-      <SafeAreaView style={{ padding: 16 }}>
-        <StatusBar backgroundColor="#4CAF5000" hidden={false} />
+      <SafeAreaView
+        //add edges to remote the unwated padding at the bottom
+        edges={["top", "left", "right"]}
+        style={{ paddingTop: 8, paddingHorizontal: 14, flex: 1 }}
+      >
         <View
           style={{
             flexDirection: "row",
@@ -235,12 +234,19 @@ export default function Task({ onPress }: any) {
             </Text>
           </View>
         ) : (
-          <View style={{ height: "74%" }}>
+          <View
+            style={{
+              //backgroundColor: "#69CA46",
+              marginTop: 20,
+              flex: 1,
+            }}
+          >
             {data ? (
               <FlatList
-                style={{ marginTop: 12 }}
+                style={{ flex: 1 }}
                 data={data}
-                contentContainerStyle={{ paddingBottom: "26%" }}
+                contentContainerStyle={{ paddingBottom: 88 }}
+                ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
                 showsVerticalScrollIndicator={false}
                 renderItem={renderItem}
               />
@@ -273,12 +279,12 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
+    height: 56,
     backgroundColor: "#69CA46",
     fontFamily: "poppinsregular",
   },
   item: {
     backgroundColor: "#C1D9FD",
-    marginBottom: 8,
     borderRadius: 14,
   },
 });
