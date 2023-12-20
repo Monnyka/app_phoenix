@@ -68,7 +68,7 @@ const CreateTask = () => {
       </Text>
 
       <BottomSheetTextInput
-        placeholder="Task Title"
+        placeholder="Task"
         value={title}
         onChangeText={(title) => setTitle(title)}
         style={{
@@ -113,7 +113,7 @@ const CreateTask = () => {
           if (title !== "") {
             setTitle("");
             setDescription("");
-            setChecked(!checked);
+            setChecked(false);
             createTask();
           }
         }}
@@ -123,7 +123,15 @@ const CreateTask = () => {
           height: 52,
         }}
       >
-        SAVE TASK
+        <Text
+          style={{
+            fontFamily: "poppinsregular",
+            marginTop: 12,
+            borderRadius: 10,
+          }}
+        >
+          SAVE TASK
+        </Text>
       </Button>
     </View>
   );

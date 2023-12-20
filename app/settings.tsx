@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Appbar } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import TextHeader from "../component/TextHeader";
+import TextHeader from "../component/TextHeaderPhoenix";
 
 const Setting = () => {
   return (

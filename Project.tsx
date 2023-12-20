@@ -3,7 +3,7 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Avatar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import TextHeader from "./component/TextHeader";
+import TextHeader from "./component/TextHeaderPhoenix";
 import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 

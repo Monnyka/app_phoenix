@@ -22,7 +22,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
-import TextHeader from "./component/TextHeader";
+import TextHeader from "./component/TextHeaderPhoenix";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
