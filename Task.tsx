@@ -1,12 +1,4 @@
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  RefreshControl,
-  Pressable,
-} from "react-native";
+import { FlatList, StyleSheet, Text, View, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -15,14 +7,12 @@ import {
   Button,
   Checkbox,
   FAB,
-  MD2Colors,
-  ProgressBar,
   TouchableRipple,
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
-import TextHeader from "./component/TextHeaderPhoenix";
+import TextHeaderPhoenix from "./components/TextHeaderPhoenix";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
@@ -175,7 +165,9 @@ export default function Task({ onPress }: any) {
             <Avatar.Icon size={35} icon={"cog"} />
           </Pressable>
         </View>
-        <TextHeader style={{ marginTop: 30 }}>Task for today</TextHeader>
+        <TextHeaderPhoenix style={{ marginTop: 30 }}>
+          Task for today
+        </TextHeaderPhoenix>
         <Text
           style={{
             fontFamily: "poppinsregular",

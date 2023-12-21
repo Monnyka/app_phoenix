@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
 
-const TextHeader = (props: any) => {
+const TextHeaderPhoenix = (props: any) => {
   return (
     <Text style={{ ...styles.headerText, ...props.style }}>
       {props.children}
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TextHeader;
+export default TextHeaderPhoenix;

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Appbar } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import TextHeader from "../component/TextHeaderPhoenix";
+import TextHeaderPhoenix from "../components/TextHeaderPhoenix";
 
 const Setting = () => {
   return (
@@ -25,7 +25,7 @@ const Setting = () => {
           />
         </Appbar.Header>
         <View style={{ paddingHorizontal: 16, backgroundColor: "#FFFFFF" }}>
-          <TextHeader>Settings</TextHeader>
+          <TextHeaderPhoenix>Settings</TextHeaderPhoenix>
           {/* Setting Item Profile */}
           <View
             style={{
