@@ -41,8 +41,6 @@ const IS_DEV = process.env.APP_VARIANT === "development";
 export default {
   name: IS_DEV ? "Phoenix (Dev)" : "Phoenix",
   slug: "Phoenix",
-  name: "Phoenix",
-  slug: "Phoenix",
   scheme: "phoenix",
   version: "1.0.0",
   orientation: "portrait",
