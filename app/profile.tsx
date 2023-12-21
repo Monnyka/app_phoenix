@@ -1,6 +1,13 @@
 import { router } from "expo-router";
 import * as React from "react";
-import { SafeAreaView, StatusBar, View, Text, StyleSheet } from "react-native";
+import {
+  SafeAreaView,
+  StatusBar,
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+} from "react-native";
 import { Appbar } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -26,6 +33,33 @@ const Profile = () => {
           >
             Profile
           </Text>
+
+          {/* Setting Item Profile */}
+          <View
+            style={{
+              height: 68,
+              backgroundColor: "#C1D9FD",
+              marginTop: 20,
+              borderRadius: 10,
+              paddingHorizontal: 16,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={{ fontFamily: "poppinsregular" }}>Username</Text>
+            <Pressable>
+              <Text
+                style={{
+                  fontFamily: "poppinssemibold",
+                  alignContent: "flex-end",
+                  color: "#42802C",
+                }}
+              >
+                Monnyka Pin
+              </Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </SafeAreaProvider>

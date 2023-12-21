@@ -31,7 +31,10 @@ const Project = () => {
             }}
           >
             <Pressable onPress={() => router.push("./profile")}>
-              <Avatar.Image size={45} source={require("./assets/icon.png")} />
+              <Avatar.Image
+                size={45}
+                source={require("./assets/pikachu.jpg")}
+              />
             </Pressable>
             <View
               style={{
@@ -66,7 +69,9 @@ const Project = () => {
             justifyContent: "center",
           }}
         >
-          <Text style={{ color: "red" }}>Coming Soon</Text>
+          <Text style={{ color: "red", fontSize: 22 }}>
+            Project is coming Soon
+          </Text>
         </View>
       </SafeAreaView>
     </LinearGradient>

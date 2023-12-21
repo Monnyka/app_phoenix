@@ -138,7 +138,10 @@ export default function Task({ onPress }: any) {
             }}
           >
             <Pressable onPress={() => router.push("./profile")}>
-              <Avatar.Image size={45} source={require("./assets/icon.png")} />
+              <Avatar.Image
+                size={45}
+                source={require("./assets/pikachu.jpg")}
+              />
             </Pressable>
             <View
               style={{
