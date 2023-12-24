@@ -20,11 +20,11 @@ export default function Task({ onPress }: any) {
   const [checked, setChecked] = React.useState(false);
 
   //navigation instance
-  const navigation = useNavigation();
+  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
 
   const getTasks = async () => {
     try {
-      const response = await fetch("https://uat.monnyka.top/api/v1/tasks");
+      const response = await fetch(apiUrl);
       const json = await response.json();
       setData(json.tasks);
     } catch (error) {
