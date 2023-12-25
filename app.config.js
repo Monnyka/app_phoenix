@@ -6,7 +6,9 @@ export default {
   slug: "phoenix",
   version: "1.0.0",
   orientation: "portrait",
-  icon: IS_DEV ? "./assets/ic_app_phoenix_dev.png" : "./assets/ic_app_phoenix.png",
+  icon: IS_DEV
+    ? "./assets/ic_app_phoenix_dev.png"
+    : "./assets/ic_app_phoenix.png",
   userInterfaceStyle: "light",
   splash: {
     image: "./assets/splash.png",
@@ -20,7 +22,10 @@ export default {
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: "./assets/adaptive-icon.png",
+      // foregroundImage: "./assets/adaptive-icon.png",
+      foregroundImage: IS_DEV
+        ? "./assets/ic_app_phoenix_dev.png"
+        : "./assets/ic_app_phoenix.png",
       backgroundColor: "#ffffff",
     },
     package: IS_DEV ? "com.nyka.Phoenix.dev" : "com.nyka.Phoenix",
