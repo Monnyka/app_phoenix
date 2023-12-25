@@ -10,7 +10,6 @@ import {
   TouchableRipple,
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
 import TextHeaderPhoenix from "./components/TextHeaderPhoenix";
 
@@ -234,6 +233,8 @@ export default function Task({ onPress }: any) {
                 ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
                 showsVerticalScrollIndicator={false}
                 renderItem={renderItem}
+                refreshing={isLoading}
+                onRefresh={getTasks}
               />
             ) : (
               <Text>No data</Text>
