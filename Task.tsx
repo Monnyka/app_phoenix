@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import TextHeaderPhoenix from "./components/TextHeaderPhoenix";
+import LottieView from "lottie-react-native";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
@@ -225,20 +226,48 @@ export default function Task({ onPress }: any) {
               flex: 1,
             }}
           >
-            {data ? (
-              <FlatList
-                style={{ flex: 1 }}
-                data={data}
-                contentContainerStyle={{ paddingBottom: 88 }}
-                ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
-                showsVerticalScrollIndicator={false}
-                renderItem={renderItem}
-                refreshing={isLoading}
-                onRefresh={getTasks}
-              />
-            ) : (
-              <Text>No data</Text>
-            )}
+            <FlatList
+              style={{ flex: 1 }}
+              data={data}
+              contentContainerStyle={{ paddingBottom: 88 }}
+              ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+              showsVerticalScrollIndicator={false}
+              renderItem={renderItem}
+              refreshing={isLoading}
+              onRefresh={getTasks}
+              ListEmptyComponent={
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    alignSelf: "center",
+                  }}
+                >
+                  <LottieView
+                    style={{
+                      flex: 1,
+                      width: 250,
+                    }}
+                    source={require("./assets/Animation - 1703491775913.json")}
+                    autoPlay
+                    loop={false}
+                  />
+                  <Text
+                    style={{
+                      alignContent: "center",
+                      justifyContent: "center",
+                      alignSelf: "center",
+                      fontFamily: "poppinssemibold",
+                      color: "white",
+                    }}
+                  >
+                    There is no tasks
+                  </Text>
+                </View>
+              }
+            />
           </View>
         )}
       </SafeAreaView>

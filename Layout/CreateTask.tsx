@@ -1,15 +1,7 @@
 import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import { FontDisplay } from "expo-font";
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { StyleSheet, View, Text } from "react-native";
 import { TextInput, Button, Checkbox } from "react-native-paper";
 
 const CreateTask = () => {

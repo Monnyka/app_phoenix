@@ -15,4 +15,4 @@ eas build --platform android --local
 
 ## #React Native Snippit
 
-rnfs
+rnfs, rnfe
