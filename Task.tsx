@@ -263,7 +263,7 @@ export default function Task({ onPress }: any) {
                       color: "white",
                     }}
                   >
-                    There is no tasks
+                    There is no pending task for today.
                   </Text>
                 </View>
               }

@@ -37,7 +37,7 @@ const Profile = () => {
           {/* Setting Item Profile */}
           <View
             style={{
-              height: 68,
+              height: 58,
               backgroundColor: "#C1D9FD",
               marginTop: 20,
               borderRadius: 10,
@@ -47,7 +47,9 @@ const Profile = () => {
               justifyContent: "space-between",
             }}
           >
-            <Text style={{ fontFamily: "poppinsregular" }}>Username</Text>
+            <Text style={{ fontFamily: "poppinsregular", alignSelf: "center" }}>
+              Username
+            </Text>
             <Pressable>
               <Text
                 style={{

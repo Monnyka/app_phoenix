@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import TextHeader from "./components/TextHeaderPhoenix";
 import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
+import ButtonPhoenix from "./components/ButtonPhoenix";
 
 const Project = () => {
   return (
@@ -69,7 +70,7 @@ const Project = () => {
             justifyContent: "center",
           }}
         >
-          <Text style={{ color: "red", fontSize: 22 }}>
+          <Text style={{ color: "#ffffff", fontSize: 22 }}>
             Project is coming Soon
           </Text>
         </View>

@@ -3,6 +3,7 @@ import { FontDisplay } from "expo-font";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { TextInput, Button, Checkbox } from "react-native-paper";
+import ButtonPhoenix from "../components/ButtonPhoenix";
 
 const CreateTask = () => {
   const [title, setTitle] = React.useState("");
@@ -60,7 +61,7 @@ const CreateTask = () => {
       </Text>
 
       <BottomSheetTextInput
-        placeholder="Task"
+        placeholder="Task title"
         value={title}
         onChangeText={(title) => setTitle(title)}
         style={{
@@ -69,7 +70,7 @@ const CreateTask = () => {
           marginBottom: 8,
           fontFamily: "poppinsregular",
           backgroundColor: "#D3E4FC",
-          height: 72,
+          height: 58,
         }}
       />
       <BottomSheetTextInput
@@ -83,7 +84,7 @@ const CreateTask = () => {
           marginBottom: 8,
           fontFamily: "poppinsregular",
           backgroundColor: "#D3E4FC",
-          height: 72,
+          height: 58,
         }}
       />
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -117,12 +118,12 @@ const CreateTask = () => {
       >
         <Text
           style={{
-            fontFamily: "poppinsregular",
+            fontFamily: "poppinssemibold",
             marginTop: 12,
             borderRadius: 10,
           }}
         >
-          SAVE TASK
+          Save Task
         </Text>
       </Button>
     </View>

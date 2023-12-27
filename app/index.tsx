@@ -7,7 +7,10 @@ import { createMaterialBottomTabNavigator } from "react-native-paper/react-navig
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
 import CreateTask from "../Layout/CreateTask";
 import Project from "../Project";
 
@@ -16,7 +19,7 @@ const HomePage = () => {
   const sheetRef = useRef<BottomSheet>(null);
 
   // variables
-  const snapPoints = useMemo(() => ["50%"], []);
+  const snapPoints = useMemo(() => ["45%"], []);
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
@@ -32,9 +35,9 @@ const HomePage = () => {
     );
 
     // Remove the listener when the component unmounts
-    return () => {
-      keyboardDidHideListener.remove();
-    };
+    // return () => {
+    //   keyboardDidHideListener.remove();
+    // };
   }, []);
 
   const [fontsLoaded] = useFonts({
@@ -49,7 +52,6 @@ const HomePage = () => {
   });
 
   if (!fontsLoaded) {
-    // Font is still loading, you can show a loading screen or messages
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator animating={true} color={MD2Colors.red800} />
@@ -80,7 +82,6 @@ const HomePage = () => {
         >
           {() => <Task onPress={openBottomSheet} />}
         </Tab.Screen>
-
         <Tab.Screen
           name="Project"
           component={Project}
@@ -102,6 +103,7 @@ const HomePage = () => {
         index={-1}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
+        keyboardBehavior="interactive"
         enablePanDownToClose={true}
       >
         <BottomSheetView>

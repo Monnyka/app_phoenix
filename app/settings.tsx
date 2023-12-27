@@ -29,7 +29,7 @@ const Setting = () => {
           {/* Setting Item Profile */}
           <View
             style={{
-              height: 68,
+              height: 58,
               backgroundColor: "#C1D9FD",
               marginTop: 20,
               borderRadius: 10,
@@ -48,7 +48,7 @@ const Setting = () => {
                   color: "#42802C",
                 }}
               >
-                Update
+                View
               </Text>
             </Pressable>
           </View>
@@ -56,7 +56,7 @@ const Setting = () => {
           {/* Setting Item App Version*/}
           <View
             style={{
-              height: 68,
+              height: 58,
               backgroundColor: "#C1D9FD",
               marginTop: 10,
               borderRadius: 10,

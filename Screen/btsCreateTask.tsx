@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 
 const BTSCreateTask = () => {
   // ref
@@ -14,6 +14,17 @@ const BTSCreateTask = () => {
     console.log("handleSheetChanges", index);
   }, []);
 
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={1}
+        appearsOnIndex={2}
+      />
+    ),
+    []
+  );
+
   // renders
   return (
     <View style={styles.container}>
@@ -22,6 +33,7 @@ const BTSCreateTask = () => {
         index={1}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
+        backdropComponent={renderBackdrop}
       >
         <View style={styles.contentContainer}>
           <Text>Awesome 🎉</Text>
