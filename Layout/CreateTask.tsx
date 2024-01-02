@@ -3,16 +3,16 @@ import { FontDisplay } from "expo-font";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { TextInput, Button, Checkbox } from "react-native-paper";
-import ButtonPhoenix from "../components/ButtonPhoenix";
 
 const CreateTask = () => {
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [checked, setChecked] = React.useState(false);
+  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
 
   const createTask = async () => {
     try {
-      const response = await fetch("https://uat.monnyka.top/api/v1/tasks", {
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           Accept: "application/json",

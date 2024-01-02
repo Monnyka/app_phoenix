@@ -1,18 +1,25 @@
-## #EAS Build preview build
+## EAS Build preview build
 
+```cmd
 eas build -p android --profile=preview
+```
 
-## #Start Emulator
+## Start Emulator
 
+```cmd
 emulator -avd Pixel_7_Pro
+```
 
-Install the latest EAS CLI
+## Install the latest EAS CLI
+
+```cmd
 npm install -g eas-cli
+```
 
-## #Build Local (macOS, linux)
+## Build Local (macOS, linux)
 
 eas build --platform android --local
 
-## #React Native Snippit
+##R eact Native Snippit
 
 rnfs, rnfe

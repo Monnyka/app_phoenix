@@ -36,10 +36,7 @@ export default function Task({ onPress }: any) {
 
   const deleteTask = async (id: string) => {
     try {
-      const request = await fetch(
-        "https://uat.monnyka.top/api/v1/tasks/" + id,
-        { method: "DELETE" }
-      );
+      const request = await fetch(apiUrl + id, { method: "DELETE" });
 
       if (request.status === 200) {
         // Remove the deleted item from the data array

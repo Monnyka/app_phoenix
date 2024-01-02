@@ -11,7 +11,9 @@ export default {
     : "./assets/ic_app_phoenix.png",
   userInterfaceStyle: "light",
   splash: {
-    image: "./assets/splash.png",
+    image: IS_DEV
+      ? "./assets/ic_app_phoenix_dev.png"
+      : "./assets/ic_app_phoenix.png",
     resizeMode: "contain",
     backgroundColor: "#ffffff",
   },
