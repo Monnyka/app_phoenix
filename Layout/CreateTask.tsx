@@ -1,13 +1,14 @@
 import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
-import { FontDisplay } from "expo-font";
+import moment from "moment";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { TextInput, Button, Checkbox } from "react-native-paper";
+import { Button, Checkbox } from "react-native-paper";
 
 const CreateTask = () => {
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [checked, setChecked] = React.useState(false);
+  const [createDate, setCreateDate] = React.useState(moment());
   const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
 
   const createTask = async () => {
@@ -22,6 +23,7 @@ const CreateTask = () => {
           name: title,
           description: description,
           completed: checked,
+          createDate: createDate,
         }),
       });
 

@@ -12,7 +12,7 @@ const Project = () => {
   return (
     <LinearGradient
       // Background Linear Gradient
-      colors={["#98BEFA", "#2756FF"]}
+      colors={["#C1D9FD", "#6889FF"]}
       style={{ flex: 1 }}
     >
       <SafeAreaView
