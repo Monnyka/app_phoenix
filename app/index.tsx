@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { Keyboard, StyleSheet, Text, View } from "react-native";
 import { useFonts } from "expo-font";
-import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import {
+  ActivityIndicator,
+  MD2Colors,
+  PaperProvider,
+} from "react-native-paper";
 import Task from "../Task";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -65,52 +69,54 @@ const HomePage = () => {
   };
 
   return (
-    <SafeAreaProvider>
-      <StatusBar backgroundColor="#4CAF4F00" hidden={false} />
-      <Tab.Navigator>
-        <Tab.Screen
-          name="Task"
-          options={{
-            tabBarIcon: ({ color }: any) => (
-              <MaterialCommunityIcons
-                name="book-check-outline"
-                color={color}
-                size={26}
-              />
-            ),
-          }}
-        >
-          {() => <Task onPress={openBottomSheet} />}
-        </Tab.Screen>
-        <Tab.Screen
-          name="Project"
-          component={Project}
-          options={{
-            tabBarLabel: "Project",
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="all-inclusive"
-                color={color}
-                size={26}
-              />
-            ),
-          }}
-        />
-      </Tab.Navigator>
+    <PaperProvider>
+      <SafeAreaProvider>
+        <StatusBar backgroundColor="#4CAF4F00" hidden={false} />
+        <Tab.Navigator>
+          <Tab.Screen
+            name="Task"
+            options={{
+              tabBarIcon: ({ color }: any) => (
+                <MaterialCommunityIcons
+                  name="book-check-outline"
+                  color={color}
+                  size={26}
+                />
+              ),
+            }}
+          >
+            {() => <Task onPress={openBottomSheet} />}
+          </Tab.Screen>
+          <Tab.Screen
+            name="Project"
+            component={Project}
+            options={{
+              tabBarLabel: "Project",
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons
+                  name="all-inclusive"
+                  color={color}
+                  size={26}
+                />
+              ),
+            }}
+          />
+        </Tab.Navigator>
 
-      <BottomSheet
-        ref={sheetRef}
-        index={-1}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-        keyboardBehavior="interactive"
-        enablePanDownToClose={true}
-      >
-        <BottomSheetView>
-          <CreateTask />
-        </BottomSheetView>
-      </BottomSheet>
-    </SafeAreaProvider>
+        <BottomSheet
+          ref={sheetRef}
+          index={-1}
+          snapPoints={snapPoints}
+          onChange={handleSheetChanges}
+          keyboardBehavior="interactive"
+          enablePanDownToClose={true}
+        >
+          <BottomSheetView>
+            <CreateTask />
+          </BottomSheetView>
+        </BottomSheet>
+      </SafeAreaProvider>
+    </PaperProvider>
   );
 };
 

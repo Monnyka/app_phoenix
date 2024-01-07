@@ -10,7 +10,7 @@ import {
   TouchableRipple,
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import TextHeaderPhoenix from "./components/TextHeaderPhoenix";
 import LottieView from "lottie-react-native";
 
@@ -18,6 +18,7 @@ export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [checked, setChecked] = React.useState(false);
+  const navigation = useNavigation();
 
   //navigation instance
   const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
@@ -27,6 +28,7 @@ export default function Task({ onPress }: any) {
       const response = await fetch(apiUrl);
       const json = await response.json();
       setData(json.tasks);
+      console.log("called get data");
     } catch (error) {
       console.error(error);
     } finally {
@@ -54,6 +56,15 @@ export default function Task({ onPress }: any) {
   useEffect(() => {
     getTasks();
   }, []);
+  // Using the react-navigation library
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getTasks();
+    });
+
+    // Clean up the listener when the component is unmounted
+    return unsubscribe;
+  }, [navigation]);
 
   const renderItem = ({ item }: any) => {
     return (
@@ -63,8 +74,11 @@ export default function Task({ onPress }: any) {
             router.push({
               pathname: "/taskdetails",
               params: {
+                id: item._id,
                 name: item.name,
                 taskDescription: item.description,
+                taskCreateDate: item.createDate,
+                taskDueDate: item.dueDate,
               },
             });
           }}
