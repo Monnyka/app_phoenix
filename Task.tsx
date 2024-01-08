@@ -61,7 +61,6 @@ export default function Task({ onPress }: any) {
     const unsubscribe = navigation.addListener("focus", () => {
       getTasks();
     });
-
     // Clean up the listener when the component is unmounted
     return unsubscribe;
   }, [navigation]);
@@ -79,6 +78,7 @@ export default function Task({ onPress }: any) {
                 taskDescription: item.description,
                 taskCreateDate: item.createDate,
                 taskDueDate: item.dueDate,
+                taskStatus: item.completed,
               },
             });
           }}
