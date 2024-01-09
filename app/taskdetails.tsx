@@ -112,9 +112,13 @@ const taskdetails = () => {
                 Status
               </Text>
               <View style={{ flexWrap: "wrap", marginTop: 6 }}>
-                <Chip mode="flat">
-                  {taskStatus == "true" ? "Completed" : "Pending"}
-                </Chip>
+                {taskStatus == "true" ? (
+                  <Chip style={{ backgroundColor: "#69CA46" }}>
+                    <Text style={{ color: "white" }}>Complete</Text>
+                  </Chip>
+                ) : (
+                  <Chip>Pending</Chip>
+                )}
               </View>
               <Text
                 style={{

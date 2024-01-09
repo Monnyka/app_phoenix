@@ -13,12 +13,24 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
 import TextHeaderPhoenix from "./components/TextHeaderPhoenix";
 import LottieView from "lottie-react-native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Setting from "./app/settings";
+import Profile from "./app/profile";
+import CompleteTask from "./Screen/CompleteTask";
+import { NavigationContainer } from "@react-navigation/native";
+import PendingTask from "./Screen/PendingTask";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [checked, setChecked] = React.useState(false);
   const navigation = useNavigation();
+  const Tab = createMaterialTopTabNavigator();
+  const theme = {
+    colors: {
+      background: "transparent",
+    },
+  };
 
   //navigation instance
   const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
@@ -50,6 +62,31 @@ export default function Task({ onPress }: any) {
       console.log(jsons);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const updateTask = async (id: string) => {
+    try {
+      const response = await fetch(apiUrl + id, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          completed: true,
+        }),
+      });
+
+      if (response.ok) {
+        console.log("Task updated successfully");
+        getTasks();
+        // Reset the input fields after successful creation
+      } else {
+        console.error("Failed to update task");
+      }
+    } catch (error) {
+      console.error("Error update task:", error);
     }
   };
 
@@ -99,7 +136,7 @@ export default function Task({ onPress }: any) {
                 status={checked ? "checked" : "unchecked"}
                 onPress={() => {
                   console.log("Item is clicked " + item._id);
-                  deleteTask(item._id);
+                  updateTask(item._id);
                 }}
               />
               <Text
@@ -134,6 +171,7 @@ export default function Task({ onPress }: any) {
       </View>
     );
   };
+
   return (
     <LinearGradient
       // Background Linear Gradient
@@ -199,27 +237,45 @@ export default function Task({ onPress }: any) {
         >
           Manage your pending task
         </Text>
+        <Tab.Navigator
+          style={{ marginTop: 12 }}
+          sceneContainerStyle={{ backgroundColor: "transparent" }}
+          screenOptions={{
+            tabBarLabelStyle: {
+              fontSize: 12,
+              fontStyle: "normal",
+              fontFamily: "poppinssemibold",
+              elevation: 0,
+              backgroundColor: "transparent",
+            },
+            //tabBarAndroidRipple: { borderless: false },
+            tabBarItemStyle: { width: 120 },
+            tabBarActiveTintColor: "#FFFFFF",
+            tabBarInactiveTintColor: "#414141",
+            tabBarIndicatorStyle: {
+              borderBottomWidth: 38,
+              borderRadius: 60,
+              marginBottom: 6,
+              borderColor: "#69CA46",
+            },
+            tabBarStyle: {
+              backgroundColor: "#00000000",
+              shadowColor: "#00000000",
+            },
+          }}
+        >
+          <Tab.Screen
+            options={{ tabBarLabel: "Pending" }}
+            name="Pending"
+            component={PendingTask}
+          />
+          <Tab.Screen
+            options={{ tabBarLabel: "Completed" }}
+            name="Completed"
+            component={CompleteTask}
+          />
+        </Tab.Navigator>
 
-        <View style={{ flexDirection: "row", marginTop: 18 }}>
-          <Button
-            icon="clock-time-four"
-            buttonColor="#69CA46"
-            mode="contained"
-            onPress={() => console.log("Pressed")}
-            style={{ marginRight: 10 }}
-          >
-            <Text style={{ fontFamily: "poppinsregular" }}>Pending</Text>
-          </Button>
-          <Button
-            icon="check-decagram"
-            mode="contained"
-            buttonColor="#D9D9D9"
-            textColor="#414141"
-            onPress={() => console.log("Pressed")}
-          >
-            <Text style={{ fontFamily: "poppinsregular" }}>Pending</Text>
-          </Button>
-        </View>
         {isLoading ? (
           <View
             style={{
