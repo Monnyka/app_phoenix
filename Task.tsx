@@ -12,28 +12,15 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
 import TextHeaderPhoenix from "./components/TextHeaderPhoenix";
-import LottieView from "lottie-react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Setting from "./app/settings";
-import Profile from "./app/profile";
 import CompleteTask from "./Screen/CompleteTask";
-import { NavigationContainer } from "@react-navigation/native";
 import PendingTask from "./Screen/PendingTask";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [checked, setChecked] = React.useState(false);
-  const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
-  const theme = {
-    colors: {
-      background: "transparent",
-    },
-  };
-
-  //navigation instance
-  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
 
   const getTasks = async () => {
     try {
@@ -45,23 +32,6 @@ export default function Task({ onPress }: any) {
       console.error(error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const deleteTask = async (id: string) => {
-    try {
-      const request = await fetch(apiUrl + id, { method: "DELETE" });
-
-      if (request.status === 200) {
-        // Remove the deleted item from the data array
-        setData((prevData) => prevData.filter((item) => item._id !== id));
-      }
-
-      const jsons = await request.json();
-      //setMsg(jsons.msg);
-      console.log(jsons);
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -90,87 +60,21 @@ export default function Task({ onPress }: any) {
     }
   };
 
+  //navigation instance
+  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
+
   useEffect(() => {
     getTasks();
   }, []);
-  // Using the react-navigation library
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      getTasks();
-    });
-    // Clean up the listener when the component is unmounted
-    return unsubscribe;
-  }, [navigation]);
 
-  const renderItem = ({ item }: any) => {
-    return (
-      <View style={styles.item}>
-        <TouchableRipple
-          onPress={() => {
-            router.push({
-              pathname: "/taskdetails",
-              params: {
-                id: item._id,
-                name: item.name,
-                taskDescription: item.description,
-                taskCreateDate: item.createDate,
-                taskDueDate: item.dueDate,
-                taskStatus: item.completed,
-              },
-            });
-          }}
-          borderless
-          style={{ padding: 16, borderRadius: 16 }}
-        >
-          <View>
-            {/* Title task item */}
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                //backgroundColor: "#458989",
-                paddingEnd: 30,
-              }}
-            >
-              <Checkbox.Android
-                status={checked ? "checked" : "unchecked"}
-                onPress={() => {
-                  console.log("Item is clicked " + item._id);
-                  updateTask(item._id);
-                }}
-              />
-              <Text
-                style={{
-                  fontFamily: "poppinssemibold",
-                  fontSize: 14,
-                  textTransform: "capitalize",
-                }}
-                numberOfLines={1}
-              >
-                {item.name}
-              </Text>
-            </View>
-            {item.description ? (
-              <Text
-                style={{
-                  marginStart: 8,
-                  marginBottom: 8,
-                  marginEnd: 5,
-                  color: "#4B4A4A",
-                  fontFamily: "poppinsregular",
-                  fontSize: 13,
-                  textTransform: "capitalize",
-                }}
-                numberOfLines={2}
-              >
-                {item.description}
-              </Text>
-            ) : null}
-          </View>
-        </TouchableRipple>
-      </View>
-    );
-  };
+  //Using the react-navigation library
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener("focus", () => {
+  //     getTasks();
+  //   });
+  //   // Clean up the listener when the component is unmounted
+  //   return unsubscribe;
+  // }, [navigation]);
 
   return (
     <LinearGradient
@@ -275,76 +179,6 @@ export default function Task({ onPress }: any) {
             component={CompleteTask}
           />
         </Tab.Navigator>
-
-        {isLoading ? (
-          <View
-            style={{
-              marginTop: 20,
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <ActivityIndicator
-              animating={true}
-              size={"large"}
-              color={"#69CA46"}
-            />
-            <Text style={{ fontFamily: "poppinsregular", fontSize: 18 }}>
-              LOADING DATA
-            </Text>
-          </View>
-        ) : (
-          <View
-            style={{
-              //backgroundColor: "#69CA46",
-              marginTop: 16,
-              flex: 1,
-            }}
-          >
-            <FlatList
-              style={{ flex: 1 }}
-              data={data}
-              contentContainerStyle={{ paddingBottom: 88 }}
-              ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
-              showsVerticalScrollIndicator={false}
-              renderItem={renderItem}
-              refreshing={isLoading}
-              onRefresh={getTasks}
-              ListEmptyComponent={
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignContent: "center",
-                    alignSelf: "center",
-                  }}
-                >
-                  <LottieView
-                    style={{
-                      flex: 1,
-                      width: 250,
-                    }}
-                    source={require("./assets/Animation - 1703491775913.json")}
-                    autoPlay
-                    loop={false}
-                  />
-                  <Text
-                    style={{
-                      alignContent: "center",
-                      justifyContent: "center",
-                      alignSelf: "center",
-                      fontFamily: "poppinssemibold",
-                      color: "white",
-                    }}
-                  >
-                    There is no pending task for today.
-                  </Text>
-                </View>
-              }
-            />
-          </View>
-        )}
       </SafeAreaView>
       <FAB
         icon="pencil-plus-outline"

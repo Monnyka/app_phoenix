@@ -1,12 +1,23 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { StatusBar } from "expo-status-bar";
 import { Avatar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TextHeader from "./components/TextHeaderPhoenix";
 import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
-import ButtonPhoenix from "./components/ButtonPhoenix";
+import { I18n } from "i18n-js";
+
+// Set the key-value pairs for the different languages you want to support.
+const translations = {
+  en: { welcome: "Hello", name: "Charlie" },
+  km: { welcome: "សួស្ដី" },
+};
+
+const i18n = new I18n(translations);
+// To see the fallback mechanism uncomment the line below to force the app to use the Khmer language.
+i18n.locale = "km";
+// When a value is missing from a language it'll fall back to another language with the key present.
+i18n.enableFallback = true;
 
 const Project = () => {
   return (
@@ -53,6 +64,8 @@ const Project = () => {
               >
                 Welcome back, Have a nice day!
               </Text>
+
+              <Text>{i18n.t("welcome")}</Text>
               <Text style={{ fontFamily: "montserratbold", fontSize: 16 }}>
                 Monnyka Pin
               </Text>

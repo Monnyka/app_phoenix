@@ -174,7 +174,7 @@ const taskdetails = () => {
               <Dialog.Actions>
                 <Button onPress={() => setVisible(false)}>Cancel</Button>
                 <Button onPress={() => deleteTask(taskId)}>
-                  <Text style={{ color: "red" }}>Yes, Delete</Text>
+                  <Text style={{ color: "red" }}>Delete</Text>
                 </Button>
               </Dialog.Actions>
             </Dialog>
