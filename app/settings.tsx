@@ -12,8 +12,12 @@ import { Appbar, Modal, PaperProvider, Portal } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import TextHeaderPhoenix from "../components/TextHeaderPhoenix";
 import i18n from "../assets/translations/index";
+import { useContext } from "react";
+import { LanguageContext, LanguageProvider } from "../LanguageContext";
+
 const Setting = () => {
-  const [userLanguage, setuserLanguage] = React.useState("en");
+  const { language, changeLanguage } = useContext(LanguageContext)!;
+  const [userLanguage, setuserLanguage] = React.useState(language);
   i18n.locale = userLanguage;
 
   const [visible, setVisible] = React.useState(false);
@@ -142,7 +146,9 @@ const Setting = () => {
                 alignItems: "center",
                 marginTop: 20,
               }}
-              onPress={() => (setuserLanguage("km"), setVisible(false))}
+              onPress={() => (
+                setuserLanguage("km"), setVisible(false), changeLanguage("km")
+              )}
             >
               <Image
                 style={{ width: 35, height: 35, marginEnd: 10 }}
@@ -158,7 +164,9 @@ const Setting = () => {
                 alignItems: "center",
                 marginTop: 5,
               }}
-              onPress={() => (setuserLanguage("en"), setVisible(false))}
+              onPress={() => (
+                setuserLanguage("en"), setVisible(false), changeLanguage("en")
+              )}
             >
               <Image
                 style={{ width: 35, height: 35, marginEnd: 10 }}

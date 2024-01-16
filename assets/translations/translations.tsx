@@ -8,6 +8,7 @@ const translations = {
     Settings: "Settings",
     Choose_Language: "Choose Language",
     Khmer: "ភាសាខ្មែរ",
+    Task_for_today: "Task for today",
   },
   km: {
     welcome: "សួស្ដី",
@@ -17,6 +18,7 @@ const translations = {
     Settings: "ការកំណត់",
     Choose_Language: "ជ្រើសរើសភាសា",
     Khmer: "ភាសាខ្មែរ",
+    Task_for_today: "ការងារថ្អៃនេះ",
   },
 };
 

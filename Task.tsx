@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   ActivityIndicator,
@@ -15,12 +15,16 @@ import TextHeaderPhoenix from "./components/TextHeaderPhoenix";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import CompleteTask from "./Screen/CompleteTask";
 import PendingTask from "./Screen/PendingTask";
+import i18n from "./assets/translations/index";
+import { LanguageContext, LanguageProvider } from "./LanguageContext";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [checked, setChecked] = React.useState(false);
   const Tab = createMaterialTopTabNavigator();
+  const { language, changeLanguage } = useContext(LanguageContext)!;
+  i18n.locale = language;
 
   const getTasks = async () => {
     try {
@@ -130,7 +134,7 @@ export default function Task({ onPress }: any) {
           </Pressable>
         </View>
         <TextHeaderPhoenix style={{ marginTop: 30 }}>
-          Task for today
+          {i18n.t("Task_for_today")}
         </TextHeaderPhoenix>
         <Text
           style={{
