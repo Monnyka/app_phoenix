@@ -1,7 +1,6 @@
 import { router } from "expo-router";
 import * as React from "react";
 import {
-  SafeAreaView,
   StatusBar,
   View,
   Text,
@@ -12,23 +11,10 @@ import {
 import { Appbar, Modal, PaperProvider, Portal } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import TextHeaderPhoenix from "../components/TextHeaderPhoenix";
-import { I18n } from "i18n-js";
-
+import i18n from "../assets/translations/index";
 const Setting = () => {
-  const translations = {
-    en: {
-      welcome: "Hello",
-      name: "Charlie",
-      Language: "Language",
-      App_Version: "App Version",
-    },
-    km: { welcome: "សួស្ដី", Language: "ភាសា", App_Version: "កំណែកម្មវិធី" },
-  };
-
   const [userLanguage, setuserLanguage] = React.useState("en");
-  const i18n = new I18n(translations);
   i18n.locale = userLanguage;
-  i18n.enableFallback = true;
 
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
@@ -54,7 +40,7 @@ const Setting = () => {
             />
           </Appbar.Header>
           <View style={{ paddingHorizontal: 16, backgroundColor: "#FFFFFF" }}>
-            <TextHeaderPhoenix>Settings</TextHeaderPhoenix>
+            <TextHeaderPhoenix>{i18n.t("Settings")}</TextHeaderPhoenix>
 
             {/* Setting Item Profile */}
             <View
@@ -69,7 +55,9 @@ const Setting = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Text style={{ fontFamily: "poppinsregular" }}>Profile</Text>
+              <Text style={{ fontFamily: "poppinsregular" }}>
+                {i18n.t("Profile")}
+              </Text>
               <Pressable onPress={() => router.push("./profile")}>
                 <Text
                   style={{
@@ -100,20 +88,17 @@ const Setting = () => {
                 {i18n.t("Language")}
               </Text>
               <Pressable onPress={() => setVisible(true)}>
-                {/* <Text
-                style={{
-                  fontFamily: "poppinssemibold",
-                  alignContent: "flex-end",
-                  color: "#42802C",
-                }}
-              >
-                Khmer
-              </Text> */}
-
-                <Image
-                  style={{ width: 35, height: 35, padding: 16 }}
-                  source={require("../assets/ic_united_states.png")}
-                />
+                {userLanguage === "km" ? (
+                  <Image
+                    style={{ width: 35, height: 35, padding: 16 }}
+                    source={require("../assets/ic_cambodia.png")}
+                  />
+                ) : (
+                  <Image
+                    style={{ width: 35, height: 35, padding: 16 }}
+                    source={require("../assets/ic_united_states.png")}
+                  />
+                )}
               </Pressable>
             </View>
 
@@ -150,7 +135,7 @@ const Setting = () => {
             onDismiss={hideModal}
             contentContainerStyle={containerStyle}
           >
-            <Text>Select Language</Text>
+            <Text>{i18n.t("Choose_Language")}</Text>
             <Pressable
               style={{
                 flexDirection: "row",
@@ -163,7 +148,9 @@ const Setting = () => {
                 style={{ width: 35, height: 35, marginEnd: 10 }}
                 source={require("../assets/ic_cambodia.png")}
               />
-              <Text style={{ fontFamily: "poppinssemibold" }}>Khmer</Text>
+              <Text style={{ fontFamily: "poppinssemibold" }}>
+                {i18n.t("Khmer")}
+              </Text>
             </Pressable>
             <Pressable
               style={{
