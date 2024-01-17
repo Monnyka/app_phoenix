@@ -1,8 +1,10 @@
 import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import moment from "moment";
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Button, Checkbox } from "react-native-paper";
+import i18n from "../assets/translations/index";
+import { LanguageContext, LanguageProvider } from "../LanguageContext";
 
 const CreateTask = () => {
   const [title, setTitle] = React.useState("");
@@ -12,6 +14,10 @@ const CreateTask = () => {
   const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
 
   const createTask = async () => {
+    //Translation
+    const { language, changeLanguage } = useContext(LanguageContext)!;
+    i18n.locale = language;
+
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -49,7 +55,7 @@ const CreateTask = () => {
           marginTop: 22,
         }}
       >
-        Create Task
+        {i18n.t("Create_Task")}
       </Text>
       <Text
         style={{
@@ -59,11 +65,11 @@ const CreateTask = () => {
           color: "#6B6B6B",
         }}
       >
-        Making sure nothing slips through the cracks.
+        {i18n.t("SLG_CREATE_TASK")}
       </Text>
 
       <BottomSheetTextInput
-        placeholder="Task title"
+        placeholder={i18n.t("Task_title")}
         value={title}
         onChangeText={(title) => setTitle(title)}
         style={{
@@ -76,7 +82,7 @@ const CreateTask = () => {
         }}
       />
       <BottomSheetTextInput
-        placeholder="Description"
+        placeholder={i18n.t("Description")}
         value={description}
         multiline={false}
         onChangeText={(description) => setDescription(description)}
@@ -96,7 +102,7 @@ const CreateTask = () => {
             setChecked(!checked);
           }}
         />
-        <Text>Complete?</Text>
+        <Text>{i18n.t("Completed")}?</Text>
       </View>
 
       <Button
@@ -125,7 +131,7 @@ const CreateTask = () => {
             borderRadius: 10,
           }}
         >
-          Save Task
+          {i18n.t("Save_Task")}
         </Text>
       </Button>
     </View>

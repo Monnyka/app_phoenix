@@ -1,25 +1,17 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { Avatar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TextHeader from "./components/TextHeaderPhoenix";
 import { router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
-import { I18n } from "i18n-js";
-
-// Set the key-value pairs for the different languages you want to support.
-const translations = {
-  en: { welcome: "Hello", name: "Charlie" },
-  km: { welcome: "សួស្ដី" },
-};
-
-const i18n = new I18n(translations);
-// To see the fallback mechanism uncomment the line below to force the app to use the Khmer language.
-i18n.locale = "km";
-// When a value is missing from a language it'll fall back to another language with the key present.
-i18n.enableFallback = true;
+import i18n from "./assets/translations/index";
+import { LanguageContext, LanguageProvider } from "./LanguageContext";
 
 const Project = () => {
+  //Translation
+  const { language, changeLanguage } = useContext(LanguageContext)!;
+  i18n.locale = language;
   return (
     <LinearGradient
       // Background Linear Gradient
@@ -62,10 +54,8 @@ const Project = () => {
                   fontSize: 12,
                 }}
               >
-                Welcome back, Have a nice day!
+                {i18n.t("Welcome_back_Have_a_nice_day")}
               </Text>
-
-              <Text>{i18n.t("welcome")}</Text>
               <Text style={{ fontFamily: "montserratbold", fontSize: 16 }}>
                 Monnyka Pin
               </Text>
@@ -75,7 +65,7 @@ const Project = () => {
             <Avatar.Icon size={35} icon={"cog"} />
           </Pressable>
         </View>
-        <TextHeader style={{ marginTop: 30 }}>Project</TextHeader>
+        <TextHeader style={{ marginTop: 30 }}>{i18n.t("Project")}</TextHeader>
         <View
           style={{
             flex: 1,
@@ -84,7 +74,7 @@ const Project = () => {
           }}
         >
           <Text style={{ color: "#ffffff", fontSize: 22 }}>
-            Project is coming Soon
+            {i18n.t("Project_Coming_Soon")}
           </Text>
         </View>
       </SafeAreaView>

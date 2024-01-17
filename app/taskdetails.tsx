@@ -1,19 +1,19 @@
 import { View, Text, StatusBar, StyleSheet, Image } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
   Appbar,
   Button,
   Chip,
   Dialog,
-  Divider,
-  Menu,
   PaperProvider,
   Portal,
 } from "react-native-paper";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
+import i18n from "../assets/translations/index";
+import { LanguageContext, LanguageProvider } from "../LanguageContext";
 
 const taskdetails = () => {
   const params = useLocalSearchParams();
@@ -23,6 +23,10 @@ const taskdetails = () => {
   const taskCreateDate = params.taskCreateDate;
   const taskDueDate = params.taskDueDate;
   let taskStatus = params.taskStatus;
+
+  //Translation
+  const { language, changeLanguage } = useContext(LanguageContext)!;
+  i18n.locale = language;
 
   const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
 
@@ -89,7 +93,7 @@ const taskdetails = () => {
                   marginTop: 25,
                 }}
               >
-                Description:
+                {i18n.t("Description")}
               </Text>
               <Text
                 style={{
@@ -109,15 +113,17 @@ const taskdetails = () => {
                   marginTop: 25,
                 }}
               >
-                Status
+                {i18n.t("Status")}
               </Text>
               <View style={{ flexWrap: "wrap", marginTop: 6 }}>
                 {taskStatus == "true" ? (
                   <Chip style={{ backgroundColor: "#69CA46" }}>
-                    <Text style={{ color: "white" }}>Complete</Text>
+                    <Text style={{ color: "white" }}>
+                      {i18n.t("Completed")}
+                    </Text>
                   </Chip>
                 ) : (
-                  <Chip>Pending</Chip>
+                  <Chip>{i18n.t("Pending")}</Chip>
                 )}
               </View>
               <Text
@@ -128,7 +134,8 @@ const taskdetails = () => {
                   marginTop: 20,
                 }}
               >
-                Create Date: {moment(taskCreateDate).format("DD MMM, YYYY")}
+                {i18n.t("Create_Date") + ": "}
+                {moment(taskCreateDate).format("DD MMM, YYYY")}
               </Text>
 
               <Text
@@ -138,7 +145,8 @@ const taskdetails = () => {
                   color: "#414141",
                 }}
               >
-                Due Date: {moment(taskDueDate).format("DD MMM, YYYY")}
+                {i18n.t("Due_Date") + ": "}
+                {moment(taskDueDate).format("DD MMM, YYYY")}
               </Text>
             </View>
             <View
@@ -164,17 +172,19 @@ const taskdetails = () => {
             <Dialog visible={visible} onDismiss={hideDialog}>
               <Dialog.Icon icon="alert" />
               <Dialog.Title style={{ textAlign: "center" }}>
-                Confirmation
+                {i18n.t("Confirmation")}
               </Dialog.Title>
               <Dialog.Content>
                 <Text style={{ textAlign: "center" }}>
-                  Are you sure you want to delete this task?
+                  {i18n.t("MSG_DELETE_TASK")}
                 </Text>
               </Dialog.Content>
               <Dialog.Actions>
-                <Button onPress={() => setVisible(false)}>Cancel</Button>
+                <Button onPress={() => setVisible(false)}>
+                  {i18n.t("Cancel")}
+                </Button>
                 <Button onPress={() => deleteTask(taskId)}>
-                  <Text style={{ color: "red" }}>Delete</Text>
+                  <Text style={{ color: "red" }}>{i18n.t("Delete")}</Text>
                 </Button>
               </Dialog.Actions>
             </Dialog>

@@ -1,17 +1,17 @@
 import { router } from "expo-router";
 import * as React from "react";
-import {
-  SafeAreaView,
-  StatusBar,
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-} from "react-native";
+import { StatusBar, View, Text, StyleSheet, Pressable } from "react-native";
 import { Appbar } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import i18n from "../assets/translations/index";
+import { LanguageContext, LanguageProvider } from "../LanguageContext";
+import { useContext } from "react";
 
 const Profile = () => {
+  //Translation
+  const { language, changeLanguage } = useContext(LanguageContext)!;
+  i18n.locale = language;
+
   return (
     <SafeAreaProvider>
       <StatusBar backgroundColor="#4CAF4F00" hidden={false} />
@@ -31,7 +31,7 @@ const Profile = () => {
               color: "#01044B",
             }}
           >
-            Profile
+            {i18n.t("Profile")}
           </Text>
 
           {/* Setting Item Profile */}
@@ -48,7 +48,7 @@ const Profile = () => {
             }}
           >
             <Text style={{ fontFamily: "poppinsregular", alignSelf: "center" }}>
-              Username
+              {i18n.t("Username")}
             </Text>
             <Pressable>
               <Text

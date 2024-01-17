@@ -122,7 +122,7 @@ export default function Task({ onPress }: any) {
                   fontSize: 12,
                 }}
               >
-                Welcome back, Have a nice day!
+                {i18n.t("Welcome_back_Have_a_nice_day")}
               </Text>
               <Text style={{ fontFamily: "montserratbold", fontSize: 16 }}>
                 Monnyka Pin
@@ -143,7 +143,7 @@ export default function Task({ onPress }: any) {
             color: "#01044B",
           }}
         >
-          Manage your pending task
+          {i18n.t("Manage_your_pending_task")}
         </Text>
         <Tab.Navigator
           style={{ marginTop: 12 }}
@@ -173,12 +173,12 @@ export default function Task({ onPress }: any) {
           }}
         >
           <Tab.Screen
-            options={{ tabBarLabel: "Pending" }}
+            options={{ tabBarLabel: i18n.t("Pending") }}
             name="Pending"
             component={PendingTask}
           />
           <Tab.Screen
-            options={{ tabBarLabel: "Completed" }}
+            options={{ tabBarLabel: i18n.t("Completed") }}
             name="Completed"
             component={CompleteTask}
           />
@@ -187,7 +187,7 @@ export default function Task({ onPress }: any) {
       <FAB
         icon="pencil-plus-outline"
         color="#ffff"
-        label="Add Task"
+        label={i18n.t("Add_Task")}
         style={styles.fab}
         onPress={onPress}
       />

@@ -1,6 +1,7 @@
 import React, {
   createContext,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -23,10 +24,16 @@ import BottomSheet, {
 } from "@gorhom/bottom-sheet";
 import CreateTask from "../Layout/CreateTask";
 import Project from "../Project";
+import i18n from "../assets/translations/index";
+import { LanguageContext, LanguageProvider } from "../LanguageContext";
 
 const HomePage = () => {
   const Tab = createMaterialBottomTabNavigator();
   const sheetRef = useRef<BottomSheet>(null);
+
+  //Translate
+  const { language, changeLanguage } = useContext(LanguageContext)!;
+  i18n.locale = language;
 
   // variables
   const snapPoints = useMemo(() => ["45%"], []);
@@ -80,7 +87,7 @@ const HomePage = () => {
         <StatusBar backgroundColor="#4CAF4F00" hidden={false} />
         <Tab.Navigator>
           <Tab.Screen
-            name="Task"
+            name={i18n.t("Task")}
             options={{
               tabBarIcon: ({ color }: any) => (
                 <MaterialCommunityIcons
@@ -94,10 +101,9 @@ const HomePage = () => {
             {() => <Task onPress={openBottomSheet} />}
           </Tab.Screen>
           <Tab.Screen
-            name="Project"
+            name={i18n.t("Project")}
             component={Project}
             options={{
-              tabBarLabel: "Project",
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons
                   name="all-inclusive"
