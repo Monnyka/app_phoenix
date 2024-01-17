@@ -18,18 +18,28 @@ import { createMaterialBottomTabNavigator } from "react-native-paper/react-navig
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import CreateTask from "../Layout/CreateTask";
 import Project from "../Project";
 import i18n from "../assets/translations/index";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomePage = () => {
   const Tab = createMaterialBottomTabNavigator();
   const sheetRef = useRef<BottomSheet>(null);
+
+  const getData = async () => {
+    try {
+      const storeData = await AsyncStorage.getItem("userLanguage");
+      if (storeData !== null) {
+        // value previously
+        changeLanguage(storeData);
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
 
   //Translate
   const { language, changeLanguage } = useContext(LanguageContext)!;
@@ -42,6 +52,7 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
+    getData();
     // Add a listener for keyboard dismissal
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",

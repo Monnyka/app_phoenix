@@ -1,14 +1,7 @@
-import { FlatList, StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import {
-  ActivityIndicator,
-  Avatar,
-  Button,
-  Checkbox,
-  FAB,
-  TouchableRipple,
-} from "react-native-paper";
+import { Avatar, FAB } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
 import TextHeaderPhoenix from "./components/TextHeaderPhoenix";
@@ -36,31 +29,6 @@ export default function Task({ onPress }: any) {
       console.error(error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const updateTask = async (id: string) => {
-    try {
-      const response = await fetch(apiUrl + id, {
-        method: "PATCH",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          completed: true,
-        }),
-      });
-
-      if (response.ok) {
-        console.log("Task updated successfully");
-        getTasks();
-        // Reset the input fields after successful creation
-      } else {
-        console.error("Failed to update task");
-      }
-    } catch (error) {
-      console.error("Error update task:", error);
     }
   };
 

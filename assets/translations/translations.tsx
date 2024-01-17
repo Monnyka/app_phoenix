@@ -57,7 +57,7 @@ const translations = {
     Confirmation: "បញ្ជាក់",
     Create_Task: "បង្កើតកិច្ចការ",
     SLG_CREATE_TASK: "ធ្វើឱ្យប្រាកដថាគ្មានអ្វីរអិលឆ្លងកាត់ស្នាមប្រេះទេ",
-    Task_title: "Task title",
+    Task_title: "ចំណងជើងកិច្ចការ",
     Save_Task: "រក្សាទុកកិច្ចការ",
     Username: "ឈ្មោះ​អ្នកប្រើប្រាស់",
     Project_Coming_Soon: "គម្រោងនឹងមកដល់ឆាប់ៗនេះ",

@@ -8,12 +8,19 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import { Appbar, Modal, PaperProvider, Portal } from "react-native-paper";
+import {
+  Appbar,
+  Button,
+  Modal,
+  PaperProvider,
+  Portal,
+} from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import TextHeaderPhoenix from "../components/TextHeaderPhoenix";
 import i18n from "../assets/translations/index";
 import { useContext } from "react";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Setting = () => {
   const { language, changeLanguage } = useContext(LanguageContext)!;
@@ -29,6 +36,26 @@ const Setting = () => {
     marginHorizontal: 20,
     borderRadius: 10,
     alignItems: "center",
+  };
+
+  const storeData = async (userDataLanguage: any) => {
+    try {
+      await AsyncStorage.setItem("userLanguage", userDataLanguage);
+    } catch (e) {
+      // saving error
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const storeData = await AsyncStorage.getItem("userLanguage");
+      if (storeData !== null) {
+        // value previously
+        console.log(storeData);
+      }
+    } catch (e) {
+      // error reading value
+    }
   };
 
   return (
@@ -92,17 +119,21 @@ const Setting = () => {
                 {i18n.t("Language")}
               </Text>
               <Pressable onPress={() => setVisible(true)}>
-                {userLanguage === "km" ? (
-                  <Image
-                    style={{ width: 35, height: 35, padding: 16 }}
-                    source={require("../assets/ic_cambodia.png")}
-                  />
-                ) : (
-                  <Image
-                    style={{ width: 35, height: 35, padding: 16 }}
-                    source={require("../assets/ic_united_states.png")}
-                  />
-                )}
+                {userLanguage === "km"
+                  ? (storeData("km"),
+                    (
+                      <Image
+                        style={{ width: 35, height: 35, padding: 16 }}
+                        source={require("../assets/ic_cambodia.png")}
+                      />
+                    ))
+                  : (storeData("en"),
+                    (
+                      <Image
+                        style={{ width: 35, height: 35, padding: 16 }}
+                        source={require("../assets/ic_united_states.png")}
+                      />
+                    ))}
               </Pressable>
             </View>
 
