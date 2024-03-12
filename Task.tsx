@@ -57,12 +57,13 @@ export default function Task({ onPress }: any) {
       <SafeAreaView
         //add edges to remote the unwated padding at the bottom
         edges={["top", "left", "right"]}
-        style={{ paddingTop: 16, paddingHorizontal: 14, flex: 1 }}
+        style={{ paddingTop: 16, marginHorizontal: 0, flex: 1 }}
       >
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
+            paddingHorizontal: 16,
           }}
         >
           <View
@@ -87,7 +88,7 @@ export default function Task({ onPress }: any) {
                 style={{
                   fontFamily: "montserratbold",
                   color: "#626262",
-                  fontSize: 12,
+                  fontSize: 14,
                 }}
               >
                 {i18n.t("Welcome_back_Have_a_nice_day")}
@@ -101,21 +102,25 @@ export default function Task({ onPress }: any) {
             <Avatar.Icon size={35} icon={"cog"} />
           </Pressable>
         </View>
-        <TextHeaderPhoenix style={{ marginTop: 30 }}>
+        <TextHeaderPhoenix style={{ marginTop: 30, paddingHorizontal: 16 }}>
           {i18n.t("Task_for_today")}
         </TextHeaderPhoenix>
         <Text
           style={{
             fontFamily: "poppinsregular",
-            fontSize: 11,
+            fontSize: 14,
             color: "#01044B",
+            paddingHorizontal: 16,
           }}
         >
           {i18n.t("Manage_your_pending_task")}
         </Text>
         <Tab.Navigator
           style={{ marginTop: 12 }}
-          sceneContainerStyle={{ backgroundColor: "transparent" }}
+          sceneContainerStyle={{
+            backgroundColor: "transparent",
+            paddingHorizontal: 16,
+          }}
           screenOptions={{
             tabBarLabelStyle: {
               fontSize: 12,
@@ -137,6 +142,7 @@ export default function Task({ onPress }: any) {
             tabBarStyle: {
               backgroundColor: "#00000000",
               shadowColor: "#00000000",
+              marginStart: 16,
             },
           }}
         >

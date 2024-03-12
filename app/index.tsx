@@ -24,11 +24,22 @@ import Project from "../Project";
 import i18n from "../assets/translations/index";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 
 const HomePage = () => {
   const Tab = createMaterialBottomTabNavigator();
   const sheetRef = useRef<BottomSheet>(null);
 
+  const checkTokenAndNavigate = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (!token) {
+        router.push("./login");
+      }
+    } catch (error) {
+      console.error("Error checking token:", error);
+    }
+  };
   const getData = async () => {
     try {
       const storeData = await AsyncStorage.getItem("userLanguage");
@@ -52,7 +63,8 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    getData();
+    checkTokenAndNavigate();
+    //getData();
     // Add a listener for keyboard dismissal
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
@@ -71,7 +83,7 @@ const HomePage = () => {
   const [fontsLoaded] = useFonts({
     montserratregular: require("../assets/fonts/Montserrat-Regular.ttf"),
     montserratitalic: require("../assets/fonts/Montserrat-Italic.ttf"),
-    montserratbold: require("../assets/fonts/Montserrat-Bold.ttf"),
+    poppinsbold: require("../assets/fonts/Poppins-Bold.ttf"),
     crimsonproregular: require("../assets/fonts/CrimsonPro-Regular.ttf"),
     crimsonproitalic: require("../assets/fonts/CrimsonPro-Italic.ttf"),
     crimsonprobold: require("../assets/fonts/CrimsonPro-Bold.ttf"),

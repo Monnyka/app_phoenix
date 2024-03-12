@@ -12,12 +12,11 @@ const CreateTask = () => {
   const [checked, setChecked] = React.useState(false);
   const [createDate, setCreateDate] = React.useState(moment());
   const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
+  //Translation
+  const { language, changeLanguage } = useContext(LanguageContext)!;
+  i18n.locale = language;
 
   const createTask = async () => {
-    //Translation
-    const { language, changeLanguage } = useContext(LanguageContext)!;
-    i18n.locale = language;
-
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -122,6 +121,7 @@ const CreateTask = () => {
           marginTop: 8,
           paddingVertical: 4,
           height: 52,
+          marginBottom: 16,
         }}
       >
         <Text
