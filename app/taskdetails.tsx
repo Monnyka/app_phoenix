@@ -78,7 +78,7 @@ const taskdetails = () => {
             >
               <Text
                 style={{
-                  fontFamily: "montserratbold",
+                  fontFamily: "poppinssemibold",
                   fontSize: 20,
                   color: "#01044B",
                 }}
@@ -87,7 +87,7 @@ const taskdetails = () => {
               </Text>
               <Text
                 style={{
-                  fontFamily: "montserratbold",
+                  fontFamily: "poppinssemibold",
                   fontSize: 14,
                   color: "#01044B",
                   marginTop: 25,
@@ -107,7 +107,7 @@ const taskdetails = () => {
 
               <Text
                 style={{
-                  fontFamily: "montserratbold",
+                  fontFamily: "poppinssemibold",
                   fontSize: 14,
                   color: "#01044B",
                   marginTop: 25,

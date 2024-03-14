@@ -74,8 +74,6 @@ const HomePage = () => {
   }, []);
 
   const [fontsLoaded] = useFonts({
-    montserratregular: require("../assets/fonts/Montserrat-Regular.ttf"),
-    montserratitalic: require("../assets/fonts/Montserrat-Italic.ttf"),
     poppinsbold: require("../assets/fonts/Poppins-Bold.ttf"),
     crimsonproregular: require("../assets/fonts/CrimsonPro-Regular.ttf"),
     crimsonproitalic: require("../assets/fonts/CrimsonPro-Italic.ttf"),

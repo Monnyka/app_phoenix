@@ -2,7 +2,6 @@ import {
   View,
   Text,
   Platform,
-  Button,
   StyleSheet,
   KeyboardAvoidingView,
 } from "react-native";

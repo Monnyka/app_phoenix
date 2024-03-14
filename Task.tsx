@@ -86,14 +86,14 @@ export default function Task({ onPress }: any) {
             >
               <Text
                 style={{
-                  fontFamily: "montserratbold",
+                  fontFamily: "poppinssemibold",
                   color: "#626262",
                   fontSize: 14,
                 }}
               >
                 {i18n.t("Welcome_back_Have_a_nice_day")}
               </Text>
-              <Text style={{ fontFamily: "montserratbold", fontSize: 16 }}>
+              <Text style={{ fontFamily: "poppinssemibold", fontSize: 16 }}>
                 Monnyka Pin
               </Text>
             </View>
