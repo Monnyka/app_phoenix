@@ -62,7 +62,6 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    checkTokenAndNavigate();
     //getData();
     // Add a listener for keyboard dismissal
     const keyboardDidHideListener = Keyboard.addListener(
@@ -72,11 +71,6 @@ const HomePage = () => {
         sheetRef.current?.snapToIndex(0);
       }
     );
-
-    // Remove the listener when the component unmounts
-    // return () => {
-    //   keyboardDidHideListener.remove();
-    // };
   }, []);
 
   const [fontsLoaded] = useFonts({
@@ -97,6 +91,10 @@ const HomePage = () => {
         <Text>Loading...</Text>
       </View>
     );
+  }
+
+  if (fontsLoaded) {
+    checkTokenAndNavigate();
   }
 
   const openBottomSheet = () => {

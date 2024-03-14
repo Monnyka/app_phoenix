@@ -1,6 +1,7 @@
 import {
   View,
   Text,
+  Platform,
   Button,
   StyleSheet,
   KeyboardAvoidingView,
@@ -12,7 +13,10 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const login = () => {
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
       <ScrollView contentContainerStyle={{ flex: 1, padding: 16 }}>
         <View style={{ flex: 1 }}>
           <View
@@ -49,7 +53,7 @@ const login = () => {
               secureTextEntry={true}
               keyboardType="number-pad"
             />
-            <View style={{ marginTop: 80 }}></View>
+            <View style={{ marginTop: 14 }}></View>
             <ButtonPhoenix style={{ marginBottom: 16 }}>LOGIN</ButtonPhoenix>
             <ButtonPhoenix style={{ marginBottom: 16 }} buttonType="secondary">
               REGISTER
@@ -61,7 +65,7 @@ const login = () => {
   );
 };
 const styles = StyleSheet.create({
-  buttonContainer: { flex: 1, justifyContent: "flex-end" },
+  buttonContainer: { justifyContent: "flex-end" },
 });
 
 export default login;
