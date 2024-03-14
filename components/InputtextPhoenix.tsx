@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Text, View, TextInput, StyleSheet } from "react-native";
+import React from "react";
+import { TextInput, StyleSheet } from "react-native";
 
 const InputtextPhoenix = ({
   placeholder = "Enter text...",
