@@ -1,77 +1,27 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from "react";
-import { Keyboard, StyleSheet, Text, View } from "react-native";
-import { useFonts } from "expo-font";
-import {
-  ActivityIndicator,
-  MD2Colors,
-  PaperProvider,
-} from "react-native-paper";
-import Task from "../Task";
-import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { StatusBar } from "expo-status-bar";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import CreateTask from "../Layout/CreateTask";
-import Project from "../Project";
-import i18n from "../assets/translations/index";
-import { LanguageContext, LanguageProvider } from "../LanguageContext";
+import React, { useEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFonts } from "expo-font";
+import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
+import { ActivityIndicator } from "react-native-paper";
+import { BASE_COLOR } from "../constants/Color";
 
-const HomePage = () => {
-  const Tab = createMaterialBottomTabNavigator();
-  const sheetRef = useRef<BottomSheet>(null);
+const IndexScreen = () => {
+  const navigation = useNavigation();
 
   const checkTokenAndNavigate = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
       if (!token) {
         router.push("./login");
+      } else {
+        router.push("./main");
       }
     } catch (error) {
       console.error("Error checking token:", error);
     }
   };
-  const getData = async () => {
-    try {
-      const storeData = await AsyncStorage.getItem("userLanguage");
-      if (storeData !== null) {
-        // value previously
-        changeLanguage(storeData);
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
-
-  //Translate
-  const { language, changeLanguage } = useContext(LanguageContext)!;
-  i18n.locale = language;
-
-  // variables
-  const snapPoints = useMemo(() => ["45%"], []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
-  useEffect(() => {
-    //getData();
-    // Add a listener for keyboard dismissal
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        // Close the BottomSheet when the keyboard is dismissed
-        sheetRef.current?.snapToIndex(0);
-      }
-    );
-  }, []);
 
   const [fontsLoaded] = useFonts({
     poppinsbold: require("../assets/fonts/Poppins-Bold.ttf"),
@@ -82,75 +32,29 @@ const HomePage = () => {
     poppinssemibold: require("../assets/fonts/Poppins-SemiBold.ttf"),
   });
 
+  useEffect(() => {
+    if (fontsLoaded) {
+      checkTokenAndNavigate();
+    }
+  }, [fontsLoaded]);
+
   if (!fontsLoaded) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator animating={true} color={MD2Colors.red800} />
-        <Text>Loading...</Text>
+        <ActivityIndicator animating={true} color={BASE_COLOR} />
       </View>
     );
   }
 
-  if (fontsLoaded) {
-    checkTokenAndNavigate();
-  }
-
-  const openBottomSheet = () => {
-    sheetRef.current?.expand();
-  };
-
   return (
-    <PaperProvider>
-      <SafeAreaProvider>
-        <StatusBar backgroundColor="#4CAF4F00" hidden={false} />
-        <Tab.Navigator>
-          <Tab.Screen
-            name={i18n.t("Task")}
-            options={{
-              tabBarIcon: ({ color }: any) => (
-                <MaterialCommunityIcons
-                  name="book-check-outline"
-                  color={color}
-                  size={26}
-                />
-              ),
-            }}
-          >
-            {() => <Task onPress={openBottomSheet} />}
-          </Tab.Screen>
-          <Tab.Screen
-            name={i18n.t("Project")}
-            component={Project}
-            options={{
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons
-                  name="all-inclusive"
-                  color={color}
-                  size={26}
-                />
-              ),
-            }}
-          />
-        </Tab.Navigator>
-
-        <BottomSheet
-          ref={sheetRef}
-          index={-1}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}
-          keyboardBehavior="interactive"
-          enablePanDownToClose={true}
-        >
-          <BottomSheetView>
-            <CreateTask />
-          </BottomSheetView>
-        </BottomSheet>
-      </SafeAreaProvider>
-    </PaperProvider>
+    <View style={styles.container}>
+      <Text>Index Screen</Text>
+      <ActivityIndicator animating={true} color={BASE_COLOR} />
+    </View>
   );
 };
 
-export default HomePage;
+export default IndexScreen;
 
 const styles = StyleSheet.create({
   container: {

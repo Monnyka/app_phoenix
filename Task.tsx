@@ -39,15 +39,6 @@ export default function Task({ onPress }: any) {
     getTasks();
   }, []);
 
-  //Using the react-navigation library
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener("focus", () => {
-  //     getTasks();
-  //   });
-  //   // Clean up the listener when the component is unmounted
-  //   return unsubscribe;
-  // }, [navigation]);
-
   return (
     <LinearGradient
       // Background Linear Gradient
