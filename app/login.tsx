@@ -13,10 +13,15 @@ import InputtextPhoenix from "../components/InputtextPhoenix";
 import { ScrollView } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import callLoginApi from "../api";
 
 const login = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useFocusEffect(
     React.useCallback(() => {
@@ -34,6 +39,45 @@ const login = () => {
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  // const handleLogin = async () => {
+  //   try {
+  //     const response = await callLoginApi(email, password);
+  //     // Handle the API response, e.g., navigate to the next screen
+  //     router.push("./main");
+  //   } catch (error) {
+  //     // Handle login error, e.g., show an error message
+  //     console.error("Login error:", error);
+  //   }
+  // };
+
+  const callLoginApi = async (email: any, password: any) => {
+    const API_URL: any = "https://uat.monnyka.top/api/v1/auth/login"; // Replace 'your-api-url' with your actual API URL
+    console.log("called");
+    try {
+      setLoading(true);
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      // Navigate to the next screen
+      router.push("./main");
+    } catch (error) {
+      setError("Login failed. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -74,6 +118,7 @@ const login = () => {
             <InputtextPhoenix
               placeholder="Email"
               keyboardType={"email-address"}
+              onChangeText={setEmail}
             />
             <View style={{ marginTop: 14 }} />
             <View>
@@ -81,6 +126,8 @@ const login = () => {
                 placeholder="Password"
                 secureTextEntry={showPassword}
                 keyboardType="default"
+                onChangeText={setPassword}
+                returnKeyType="done"
               />
               <TouchableOpacity
                 style={{
@@ -102,7 +149,14 @@ const login = () => {
             </View>
 
             <View style={{ marginTop: 14 }}></View>
-            <ButtonPhoenix style={{ marginBottom: 16 }}>LOGIN</ButtonPhoenix>
+            <ButtonPhoenix
+              onPress={() => {
+                callLoginApi(email, password);
+              }}
+              style={{ marginBottom: 16 }}
+            >
+              LOGIN
+            </ButtonPhoenix>
             <ButtonPhoenix style={{ marginBottom: 16 }} buttonType="secondary">
               REGISTER
             </ButtonPhoenix>

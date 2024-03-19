@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import * as Colors from "../constants/Color";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const ButtonPhoenix = (props: any) => {
   const { buttonType } = props;
@@ -13,7 +14,10 @@ const ButtonPhoenix = (props: any) => {
   }
 
   return (
-    <View style={{ ...styles.button, ...props.style, backgroundColor }}>
+    <TouchableOpacity
+      style={{ ...styles.button, ...props.style, backgroundColor }}
+      onPress={props.onPress}
+    >
       <Text
         style={{
           ...styles.text,
@@ -23,7 +27,7 @@ const ButtonPhoenix = (props: any) => {
       >
         {props.children}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
