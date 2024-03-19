@@ -41,7 +41,11 @@ const login = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
-      <ScrollView contentContainerStyle={{ flex: 1, padding: 12 }}>
+      <ScrollView
+        alwaysBounceHorizontal={false}
+        bounces={false}
+        contentContainerStyle={{ flex: 1, padding: 12 }}
+      >
         <View style={{ flex: 1 }}>
           <View
             style={{
@@ -72,18 +76,31 @@ const login = () => {
               keyboardType={"email-address"}
             />
             <View style={{ marginTop: 14 }} />
-            <InputtextPhoenix
-              placeholder="Password"
-              secureTextEntry={showPassword}
-              keyboardType="default"
-            />
-            <TouchableOpacity style={styles.icon} onPress={toggleShowPassword}>
-              <MaterialIcons
-                name={showPassword ? "visibility-off" : "visibility"}
-                size={24}
-                color="black"
+            <View>
+              <InputtextPhoenix
+                placeholder="Password"
+                secureTextEntry={showPassword}
+                keyboardType="default"
               />
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  width: 40,
+                  height: 52,
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  justifyContent: "center",
+                  paddingEnd: 12,
+                }}
+                onPress={toggleShowPassword}
+              >
+                <MaterialIcons
+                  name={showPassword ? "visibility-off" : "visibility"}
+                  size={24}
+                  color="black"
+                />
+              </TouchableOpacity>
+            </View>
+
             <View style={{ marginTop: 14 }}></View>
             <ButtonPhoenix style={{ marginBottom: 16 }}>LOGIN</ButtonPhoenix>
             <ButtonPhoenix style={{ marginBottom: 16 }} buttonType="secondary">

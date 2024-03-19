@@ -2,14 +2,11 @@ import React, { useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
-import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
 import { ActivityIndicator } from "react-native-paper";
 import { BASE_COLOR } from "../constants/Color";
 
 const IndexScreen = () => {
-  const navigation = useNavigation();
-
   const checkTokenAndNavigate = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
