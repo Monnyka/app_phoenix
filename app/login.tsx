@@ -15,13 +15,23 @@ import { useFocusEffect } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import callLoginApi from "../api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  Button,
+  Dialog,
+  PaperProvider,
+  Portal,
+  Snackbar,
+} from "react-native-paper";
+import MyDialog from "../components/Dialog";
 
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
+  const [dialogVisible, setDialogVisible] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -41,129 +51,147 @@ const login = () => {
     setShowPassword(!showPassword);
   };
 
-  // const handleLogin = async () => {
-  //   try {
-  //     const response = await callLoginApi(email, password);
-  //     // Handle the API response, e.g., navigate to the next screen
-  //     router.push("./main");
-  //   } catch (error) {
-  //     // Handle login error, e.g., show an error message
-  //     console.error("Login error:", error);
-  //   }
-  // };
-
-  const callLoginApi = async (email: any, password: any) => {
-    const API_URL: any = "https://uat.monnyka.top/api/v1/auth/login"; // Replace 'your-api-url' with your actual API URL
-    console.log("called");
+  const saveToken = async (value: any) => {
     try {
-      setLoading(true);
-      const response = await fetch(API_URL, {
+      await AsyncStorage.setItem("token", value);
+      console.log("Data saved successfully!");
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
+  };
+
+  const callLoginApi = async () => {
+    const apiUrl: any = "https://uat.monnyka.top/api/v1/auth/login"; // Replace 'your-api-url' with your actual API URL
+    try {
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email: email.toLowerCase(),
+          password: password,
+        }),
       });
 
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
+      if (response.ok) {
+        const data = await response.json();
+        saveToken(data.token);
+        console.log(data.token);
 
-      const data = await response.json();
-      console.log(data);
-      // Navigate to the next screen
-      router.push("./main");
+        router.push("./main");
+      } else {
+        setDialogVisible(true);
+      }
     } catch (error) {
-      setError("Login failed. Please check your credentials.");
-    } finally {
-      setLoading(false);
+      console.error("Error", error);
     }
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
-    >
-      <ScrollView
-        alwaysBounceHorizontal={false}
-        bounces={false}
-        contentContainerStyle={{ flex: 1, padding: 12 }}
+    <PaperProvider>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
       >
-        <View style={{ flex: 1 }}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ fontSize: 32, fontFamily: "poppinssemibold" }}>
-              Login
-            </Text>
-            <Text
+        <ScrollView
+          alwaysBounceHorizontal={false}
+          bounces={false}
+          contentContainerStyle={{ flex: 1, padding: 12 }}
+        >
+          <View style={{ flex: 1 }}>
+            <View
               style={{
-                fontSize: 14,
-                alignContent: "center",
-                textAlign: "center",
-                fontFamily: "poppinsbold",
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              Manage all your task with Phoenix, Track your project progress
-              more easier
-            </Text>
-          </View>
-
-          <View style={styles.buttonContainer}>
-            <InputtextPhoenix
-              placeholder="Email"
-              keyboardType={"email-address"}
-              onChangeText={setEmail}
-            />
-            <View style={{ marginTop: 14 }} />
-            <View>
-              <InputtextPhoenix
-                placeholder="Password"
-                secureTextEntry={showPassword}
-                keyboardType="default"
-                onChangeText={setPassword}
-                returnKeyType="done"
-              />
-              <TouchableOpacity
+              <Text style={{ fontSize: 32, fontFamily: "poppinssemibold" }}>
+                Login
+              </Text>
+              <Text
                 style={{
-                  width: 40,
-                  height: 52,
-                  position: "absolute",
-                  alignSelf: "flex-end",
-                  justifyContent: "center",
-                  paddingEnd: 12,
+                  fontSize: 14,
+                  alignContent: "center",
+                  textAlign: "center",
+                  fontFamily: "poppinsbold",
                 }}
-                onPress={toggleShowPassword}
               >
-                <MaterialIcons
-                  name={showPassword ? "visibility-off" : "visibility"}
-                  size={24}
-                  color="black"
-                />
-              </TouchableOpacity>
+                Manage all your task with Phoenix, Track your project progress
+                more easier
+              </Text>
             </View>
 
-            <View style={{ marginTop: 14 }}></View>
-            <ButtonPhoenix
-              onPress={() => {
-                callLoginApi(email, password);
-              }}
-              style={{ marginBottom: 16 }}
-            >
-              LOGIN
-            </ButtonPhoenix>
-            <ButtonPhoenix style={{ marginBottom: 16 }} buttonType="secondary">
-              REGISTER
-            </ButtonPhoenix>
+            <View style={styles.buttonContainer}>
+              <InputtextPhoenix
+                placeholder="Email"
+                keyboardType={"email-address"}
+                onChangeText={setEmail}
+              />
+              <View style={{ marginTop: 14 }} />
+              <View>
+                <InputtextPhoenix
+                  placeholder="Password"
+                  secureTextEntry={showPassword}
+                  keyboardType="default"
+                  onChangeText={setPassword}
+                  returnKeyType="done"
+                />
+                <TouchableOpacity
+                  style={{
+                    width: 40,
+                    height: 52,
+                    position: "absolute",
+                    alignSelf: "flex-end",
+                    justifyContent: "center",
+                    paddingEnd: 12,
+                  }}
+                  onPress={toggleShowPassword}
+                >
+                  <MaterialIcons
+                    name={showPassword ? "visibility-off" : "visibility"}
+                    size={24}
+                    color="black"
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View style={{ marginTop: 14 }}></View>
+              <ButtonPhoenix
+                onPress={() => {
+                  callLoginApi();
+                }}
+                style={{ marginBottom: 16 }}
+              >
+                LOGIN
+              </ButtonPhoenix>
+              <ButtonPhoenix
+                style={{ marginBottom: 16 }}
+                buttonType="secondary"
+              >
+                REGISTER
+              </ButtonPhoenix>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+          <Portal>
+            <Dialog
+              visible={dialogVisible}
+              onDismiss={() => setDialogVisible(false)}
+            >
+              <Dialog.Title>Login Failed</Dialog.Title>
+              <Dialog.Content>
+                <Text>Please check your credentails and try again.</Text>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button onPress={() => setDialogVisible(false)}>OK</Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </PaperProvider>
   );
 };
 const styles = StyleSheet.create({

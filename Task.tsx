@@ -10,6 +10,7 @@ import CompleteTask from "./Screen/CompleteTask";
 import PendingTask from "./Screen/PendingTask";
 import i18n from "./assets/translations/index";
 import { LanguageContext, LanguageProvider } from "./LanguageContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Task({ onPress }: any) {
   const [data, setData] = useState([]);
@@ -21,19 +22,34 @@ export default function Task({ onPress }: any) {
 
   const getTasks = async () => {
     try {
-      const response = await fetch(apiUrl);
+      const token = await AsyncStorage.getItem("token");
+      console.log(token);
+      const response = await fetch(apiUrl, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch tasks");
+      }
+
       const json = await response.json();
       setData(json.tasks);
-      console.log("called get data");
+      console.log(data);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching tasks:", error);
+      // Handle error appropriately, e.g., show a message to the user
     } finally {
       setLoading(false);
     }
   };
 
   //navigation instance
-  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
+  //const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
+  const apiUrl = "https://uat.monnyka.top/api/v1/tasks";
 
   useEffect(() => {
     getTasks();

@@ -21,6 +21,7 @@ import i18n from "../assets/translations/index";
 import { useContext } from "react";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Setting = () => {
   const { language, changeLanguage } = useContext(LanguageContext)!;
@@ -43,6 +44,16 @@ const Setting = () => {
       await AsyncStorage.setItem("userLanguage", userDataLanguage);
     } catch (e) {
       // saving error
+    }
+  };
+
+  const clearToken = async () => {
+    try {
+      await AsyncStorage.removeItem("token");
+      router.push("./login");
+    } catch (error) {
+      console.error("Error clearing token:", error);
+      // Handle error appropriately
     }
   };
 
@@ -161,6 +172,39 @@ const Setting = () => {
               >
                 1.0.0
               </Text>
+            </View>
+
+            {/* lOGOUT*/}
+            <View
+              style={{
+                height: 58,
+                backgroundColor: "#C1D9FD",
+                marginTop: 10,
+                borderRadius: 10,
+                paddingHorizontal: 16,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={{ fontFamily: "poppinsregular" }}>
+                {i18n.t("App_Version")}
+              </Text>
+              <Pressable
+                onPress={() => {
+                  clearToken();
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "poppinssemibold",
+                    alignContent: "flex-end",
+                    color: "red",
+                  }}
+                >
+                  Log Out
+                </Text>
+              </Pressable>
             </View>
           </View>
         </View>
