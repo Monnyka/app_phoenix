@@ -15,7 +15,7 @@ const Project = () => {
   return (
     <LinearGradient
       // Background Linear Gradient
-      colors={["#C1D9FD", "#6889FF"]}
+      colors={["#FAFAFA", "#FAFAFA"]}
       style={{ flex: 1 }}
     >
       <SafeAreaView
@@ -73,7 +73,7 @@ const Project = () => {
             justifyContent: "center",
           }}
         >
-          <Text style={{ color: "#ffffff", fontSize: 22 }}>
+          <Text style={{ color: "#151515", fontSize: 16 }}>
             {i18n.t("Project_Coming_Soon")}
           </Text>
         </View>

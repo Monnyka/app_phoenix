@@ -23,7 +23,8 @@ export default function Task({ onPress }: any) {
   const getTasks = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
-      console.log(token);
+      console.log("token saved is:" + token);
+
       const response = await fetch(apiUrl, {
         headers: {
           Accept: "application/json",
@@ -33,12 +34,14 @@ export default function Task({ onPress }: any) {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch tasks");
+        throw new Error(
+          `Failed to fetch tasks: ${response.status} ${response.statusText}`
+        );
       }
 
       const json = await response.json();
-      setData(json.tasks);
-      console.log(data);
+      console.log("Fetched tasks:", json.tasks); // Log the fetched tasks
+      setData(json.tasks); // Update the component state with fetched tasks
     } catch (error) {
       console.error("Error fetching tasks:", error);
       // Handle error appropriately, e.g., show a message to the user
@@ -48,17 +51,17 @@ export default function Task({ onPress }: any) {
   };
 
   //navigation instance
-  //const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
-  const apiUrl = "https://uat.monnyka.top/api/v1/tasks";
+  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
+  //const apiUrl = "https://uat.monnyka.top/api/v1/tasks";
 
   useEffect(() => {
-    getTasks();
+    //getTasks();
   }, []);
 
   return (
     <LinearGradient
       // Background Linear Gradient
-      colors={["#C1D9FD", "#6889FF"]}
+      colors={["#FAFAFA", "#FAFAFA"]}
       style={{ flex: 1 }}
     >
       <SafeAreaView
@@ -120,7 +123,7 @@ export default function Task({ onPress }: any) {
             paddingHorizontal: 16,
           }}
         >
-          {i18n.t("Manage_your_pending_task")}
+          {i18n.t("Pending_task_for_today")}
         </Text>
         <Tab.Navigator
           style={{ marginTop: 12 }}
@@ -144,7 +147,7 @@ export default function Task({ onPress }: any) {
               borderBottomWidth: 38,
               borderRadius: 60,
               marginBottom: 6,
-              borderColor: "#69CA46",
+              borderColor: "#2E414F",
             },
             tabBarStyle: {
               backgroundColor: "#00000000",
@@ -189,7 +192,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     height: 56,
-    backgroundColor: "#69CA46",
+    backgroundColor: "#2E414F",
     fontFamily: "poppinsregular",
   },
   item: {

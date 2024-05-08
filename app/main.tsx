@@ -23,7 +23,6 @@ import Project from "../Project";
 import i18n from "../assets/translations/index";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
 
 const HomePage = () => {

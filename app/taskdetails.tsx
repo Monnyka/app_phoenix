@@ -14,6 +14,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
 import i18n from "../assets/translations/index";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
+import { green100 } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const taskdetails = () => {
   const params = useLocalSearchParams();
@@ -52,7 +54,7 @@ const taskdetails = () => {
     <PaperProvider>
       <LinearGradient
         // Background Linear Gradient
-        colors={["#C1D9FD", "#6889FF"]}
+        colors={["#FAFAFA", "#FAFAFA"]}
         style={{ flex: 1 }}
       >
         <SafeAreaView edges={["left", "right"]} style={{ flex: 1 }}>
@@ -74,13 +76,17 @@ const taskdetails = () => {
           <StatusBar backgroundColor="#4CAF4F00" hidden={false} />
           <View style={styles.container}>
             <View
-              style={{ paddingHorizontal: 16, backgroundColor: "#FFFFFF00" }}
+              style={{
+                paddingHorizontal: 16,
+                marginTop: 10,
+                // backgroundColor: "red",
+              }}
             >
               <Text
                 style={{
-                  fontFamily: "poppinssemibold",
-                  fontSize: 20,
-                  color: "#01044B",
+                  fontFamily: "poppinsbold",
+                  fontSize: 22,
+                  color: "#151823",
                 }}
               >
                 {name}
@@ -90,7 +96,7 @@ const taskdetails = () => {
                   fontFamily: "poppinssemibold",
                   fontSize: 14,
                   color: "#01044B",
-                  marginTop: 25,
+                  marginTop: 16,
                 }}
               >
                 {i18n.t("Description")}
@@ -99,55 +105,88 @@ const taskdetails = () => {
                 style={{
                   fontFamily: "poppinsregular",
                   fontSize: 14,
+                  marginTop: 6,
                   color: "#414141",
                 }}
               >
                 {taskDescription}
               </Text>
 
-              <Text
+              {/* Status Container */}
+              <View
                 style={{
-                  fontFamily: "poppinssemibold",
-                  fontSize: 14,
-                  color: "#01044B",
-                  marginTop: 25,
+                  backgroundColor: "#F2F2F2",
+                  marginTop: 16,
+                  padding: 18,
+                  borderRadius: 16,
                 }}
               >
-                {i18n.t("Status")}
-              </Text>
-              <View style={{ flexWrap: "wrap", marginTop: 6 }}>
-                {taskStatus == "true" ? (
-                  <Chip style={{ backgroundColor: "#69CA46" }}>
-                    <Text style={{ color: "white" }}>
-                      {i18n.t("Completed")}
-                    </Text>
-                  </Chip>
-                ) : (
-                  <Chip>{i18n.t("Pending")}</Chip>
-                )}
-              </View>
-              <Text
-                style={{
-                  fontFamily: "poppinsregular",
-                  fontSize: 14,
-                  color: "#414141",
-                  marginTop: 20,
-                }}
-              >
-                {i18n.t("Create_Date") + ": "}
-                {moment(taskCreateDate).format("DD MMM, YYYY")}
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: "poppinssemibold",
+                    fontSize: 14,
+                    color: "#959595",
+                  }}
+                >
+                  {i18n.t("Created_Date")}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "poppinsregular",
+                    fontSize: 14,
+                    color: "#414141",
+                  }}
+                >
+                  {moment(taskCreateDate).format("DD MMM, YYYY")}
+                </Text>
 
-              <Text
-                style={{
-                  fontFamily: "poppinsregular",
-                  fontSize: 14,
-                  color: "#414141",
-                }}
-              >
-                {i18n.t("Due_Date") + ": "}
-                {moment(taskDueDate).format("DD MMM, YYYY")}
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: "poppinssemibold",
+                    fontSize: 14,
+                    color: "#959595",
+                    marginTop: 8,
+                  }}
+                >
+                  {i18n.t("Due_Date")}
+                </Text>
+
+                <Text
+                  style={{
+                    fontFamily: "poppinsregular",
+                    fontSize: 14,
+                    color: "#414141",
+                  }}
+                >
+                  {moment(taskDueDate).format("DD MMM, YYYY")}
+                </Text>
+
+                <Text
+                  style={{
+                    fontFamily: "poppinssemibold",
+                    fontSize: 14,
+                    color: "#959595",
+                    marginTop: 4,
+                  }}
+                >
+                  {i18n.t("Status")}
+                </Text>
+                <View style={{ flexWrap: "wrap", marginTop: 6 }}>
+                  {taskStatus == "true" ? (
+                    <Chip style={{ backgroundColor: "#69CA46" }}>
+                      <Text style={{ color: "white" }}>
+                        {i18n.t("Completed")}
+                      </Text>
+                    </Chip>
+                  ) : (
+                    <Chip style={{ backgroundColor: "#2E414F" }}>
+                      <Text style={{ color: "white" }}>
+                        {i18n.t("Pending")}
+                      </Text>
+                    </Chip>
+                  )}
+                </View>
+              </View>
             </View>
             <View
               style={{

@@ -7,6 +7,7 @@ import {
 } from "react-native-paper";
 import LottieView from "lottie-react-native";
 import { router, useNavigation } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CompleteTask = () => {
   const [data, setData] = useState([]);
@@ -18,12 +19,26 @@ const CompleteTask = () => {
 
   const getTasks = async () => {
     try {
-      const response = await fetch(apiUrl + "?completed=true");
+      const token = await AsyncStorage.getItem("token");
+      const response = await fetch(`${apiUrl}?completed=true`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch tasks: ${response.status} ${response.statusText}`
+        );
+      }
+
       const json = await response.json();
-      setData(json.tasks);
-      console.log("called get data");
+      setData(json.tasks); // Update the component state with fetched tasks
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching tasks:", error);
+      // Handle error appropriately, e.g., show a message to the user
     } finally {
       setLoading(false);
     }
@@ -31,16 +46,21 @@ const CompleteTask = () => {
 
   const updateTask = async (id: string) => {
     try {
-      const response = await fetch(apiUrl + id, {
-        method: "PATCH",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          completed: false,
-        }),
-      });
+      const token = await AsyncStorage.getItem("token");
+      const response = await fetch(
+        "https://uat.monnyka.top/api/v1/tasks" + id,
+        {
+          method: "PATCH",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            completed: false,
+          }),
+        }
+      );
 
       if (response.ok) {
         console.log("Task updated successfully");
@@ -221,7 +241,7 @@ const styles = StyleSheet.create({
   },
 
   item: {
-    backgroundColor: "#C1D9FD",
+    backgroundColor: "#E6EDFB",
     borderRadius: 14,
   },
 });

@@ -11,6 +11,7 @@ const translations = {
     Task_for_today: "Task for today",
     Welcome_back_Have_a_nice_day: "Welcome back, Have a nice day!",
     Manage_your_pending_task: "Manage your pending task",
+    Pending_task_for_today: "Pending task for today",
     Pending: "Pending",
     Completed: "Completed",
     Add_Task: "Add Task",
@@ -30,6 +31,7 @@ const translations = {
     Save_Task: "Save Task",
     Username: "Username",
     Project_Coming_Soon: "Project Coming Soon",
+    Created_Date: "Created Date",
   },
   km: {
     welcome: "សួស្ដី",
@@ -42,6 +44,8 @@ const translations = {
     Task_for_today: "កិច្ចការថ្ងៃនេះ",
     Welcome_back_Have_a_nice_day: "សូមស្វាគមន៏, សូមមានសំណាងល្អសំរាប់ថ្ងៃនេះ",
     Manage_your_pending_task: "គ្រប់គ្រងកិច្ចការដែលមិនទាន់សម្រេចរបស់អ្នក",
+    Pending_task_for_today:
+      "គ្រប់គ្រងកិច្ចការដែលមិនទាន់សម្រេចរបស់អ្នកនៅថ្ងៃនេះ",
     Pending: "មិនទាន់សម្រេច",
     Completed: "រួចរាល់",
     Add_Task: "បង្កើតកិច្ចការ",
@@ -61,6 +65,7 @@ const translations = {
     Save_Task: "រក្សាទុកកិច្ចការ",
     Username: "ឈ្មោះ​អ្នកប្រើប្រាស់",
     Project_Coming_Soon: "គម្រោងនឹងមកដល់ឆាប់ៗនេះ",
+    Created_Date: "ថ្ងៃបង្កើត",
   },
 };
 

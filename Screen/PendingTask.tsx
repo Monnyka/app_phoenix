@@ -7,6 +7,7 @@ import {
 } from "react-native-paper";
 import LottieView from "lottie-react-native";
 import { router, useNavigation } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PendingTask = () => {
   const [data, setData] = useState([]);
@@ -14,16 +15,31 @@ const PendingTask = () => {
   const [checked, setChecked] = React.useState(false);
   const navigation = useNavigation();
 
-  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
+  //const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
+  const apiUrl = "https://uat.monnyka.top/api/v1/tasks";
 
   const getTasks = async () => {
     try {
-      const response = await fetch(apiUrl + "?completed=false");
+      const token = await AsyncStorage.getItem("token");
+      const response = await fetch(apiUrl + "?completed=false", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch tasks: ${response.status} ${response.statusText}`
+        );
+      }
+
       const json = await response.json();
-      setData(json.tasks);
-      console.log("called get data");
+      setData(json.tasks); // Update the component state with fetched tasks
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching tasks:", error);
+      // Handle error appropriately, e.g., show a message to the user
     } finally {
       setLoading(false);
     }
@@ -31,16 +47,21 @@ const PendingTask = () => {
 
   const updateTask = async (id: string) => {
     try {
-      const response = await fetch(apiUrl + id, {
-        method: "PATCH",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          completed: true,
-        }),
-      });
+      const token = await AsyncStorage.getItem("token");
+      const response = await fetch(
+        "https://uat.monnyka.top/api/v1/tasks/" + id,
+        {
+          method: "PATCH",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            completed: true,
+          }),
+        }
+      );
 
       if (response.ok) {
         console.log("Task updated successfully");
@@ -94,7 +115,7 @@ const PendingTask = () => {
                 flexDirection: "row",
                 alignItems: "center",
                 //backgroundColor: "#458989",
-                paddingEnd: 30,
+                paddingEnd: 25,
               }}
             >
               <Checkbox.Android
@@ -106,7 +127,7 @@ const PendingTask = () => {
               />
               <Text
                 style={{
-                  fontFamily: "poppinssemibold",
+                  fontFamily: "poppinsbold",
                   fontSize: 14,
                   textTransform: "capitalize",
                 }}
@@ -222,7 +243,7 @@ const styles = StyleSheet.create({
   },
 
   item: {
-    backgroundColor: "#C1D9FD",
+    backgroundColor: "#E6EDFB",
     borderRadius: 14,
   },
 });
