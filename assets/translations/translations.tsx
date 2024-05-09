@@ -32,6 +32,7 @@ const translations = {
     Username: "Username",
     Project_Coming_Soon: "Project Coming Soon",
     Created_Date: "Created Date",
+    Log_Out: "Log Out",
   },
   km: {
     welcome: "សួស្ដី",
@@ -66,6 +67,7 @@ const translations = {
     Username: "ឈ្មោះ​អ្នកប្រើប្រាស់",
     Project_Coming_Soon: "គម្រោងនឹងមកដល់ឆាប់ៗនេះ",
     Created_Date: "ថ្ងៃបង្កើត",
+    Log_Out: "ចាកចេញ",
   },
 };
 

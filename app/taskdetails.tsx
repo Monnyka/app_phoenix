@@ -14,8 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
 import i18n from "../assets/translations/index";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
-import { green100 } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const taskdetails = () => {
   const params = useLocalSearchParams();
@@ -34,7 +33,15 @@ const taskdetails = () => {
 
   const deleteTask = async (id: any) => {
     try {
-      const request = await fetch(apiUrl + id, { method: "DELETE" });
+      const token = await AsyncStorage.getItem("token");
+      const request = await fetch(apiUrl + "/" + id, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (request.status === 200) {
         router.back();
@@ -79,7 +86,6 @@ const taskdetails = () => {
               style={{
                 paddingHorizontal: 16,
                 marginTop: 10,
-                // backgroundColor: "red",
               }}
             >
               <Text

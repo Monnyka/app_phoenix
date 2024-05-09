@@ -15,12 +15,13 @@ const CompleteTask = () => {
   const [checked, setChecked] = React.useState(false);
   const navigation = useNavigation();
 
-  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
+  // const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
+  const apiUrl = "https://uat.monnyka.top/api/v1/tasks";
 
   const getTasks = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
-      const response = await fetch(`${apiUrl}?completed=true`, {
+      const response = await fetch(apiUrl + "?completed=true", {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -47,20 +48,17 @@ const CompleteTask = () => {
   const updateTask = async (id: string) => {
     try {
       const token = await AsyncStorage.getItem("token");
-      const response = await fetch(
-        "https://uat.monnyka.top/api/v1/tasks" + id,
-        {
-          method: "PATCH",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            completed: false,
-          }),
-        }
-      );
+      const response = await fetch(apiUrl + "/" + id, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          completed: false,
+        }),
+      });
 
       if (response.ok) {
         console.log("Task updated successfully");

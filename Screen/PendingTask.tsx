@@ -15,8 +15,7 @@ const PendingTask = () => {
   const [checked, setChecked] = React.useState(false);
   const navigation = useNavigation();
 
-  //const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
-  const apiUrl = "https://uat.monnyka.top/api/v1/tasks";
+  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
 
   const getTasks = async () => {
     try {
@@ -48,20 +47,17 @@ const PendingTask = () => {
   const updateTask = async (id: string) => {
     try {
       const token = await AsyncStorage.getItem("token");
-      const response = await fetch(
-        "https://uat.monnyka.top/api/v1/tasks/" + id,
-        {
-          method: "PATCH",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            completed: true,
-          }),
-        }
-      );
+      const response = await fetch(apiUrl + "/" + id, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          completed: true,
+        }),
+      });
 
       if (response.ok) {
         console.log("Task updated successfully");

@@ -88,16 +88,23 @@ const Setting = () => {
             <View
               style={{
                 height: 58,
-                backgroundColor: "#C1D9FD",
+                backgroundColor: "#E6EDFB",
                 marginTop: 20,
-                borderRadius: 10,
+                borderRadius: 16,
                 paddingHorizontal: 16,
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",
               }}
             >
-              <Text style={{ fontFamily: "poppinsregular" }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  marginLeft: 6,
+                  color: "#596E81",
+                  fontFamily: "poppinssemibold",
+                }}
+              >
                 {i18n.t("Profile")}
               </Text>
               <Pressable onPress={() => router.push("./profile")}>
@@ -106,6 +113,7 @@ const Setting = () => {
                     fontFamily: "poppinssemibold",
                     alignContent: "flex-end",
                     color: "#42802C",
+                    paddingLeft: 20,
                   }}
                 >
                   View
@@ -117,16 +125,23 @@ const Setting = () => {
             <View
               style={{
                 height: 58,
-                backgroundColor: "#C1D9FD",
+                backgroundColor: "#E6EDFB",
                 marginTop: 10,
-                borderRadius: 10,
+                borderRadius: 16,
                 paddingHorizontal: 16,
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",
               }}
             >
-              <Text style={{ fontFamily: "poppinsregular" }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  marginLeft: 6,
+                  color: "#596E81",
+                  fontFamily: "poppinssemibold",
+                }}
+              >
                 {i18n.t("Language")}
               </Text>
               <Pressable onPress={() => setVisible(true)}>
@@ -152,16 +167,23 @@ const Setting = () => {
             <View
               style={{
                 height: 58,
-                backgroundColor: "#C1D9FD",
+                backgroundColor: "#E6EDFB",
                 marginTop: 10,
-                borderRadius: 10,
+                borderRadius: 16,
                 paddingHorizontal: 16,
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",
               }}
             >
-              <Text style={{ fontFamily: "poppinsregular" }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  marginLeft: 6,
+                  color: "#596E81",
+                  fontFamily: "poppinssemibold",
+                }}
+              >
                 {i18n.t("App_Version")}
               </Text>
               <Text
@@ -178,17 +200,24 @@ const Setting = () => {
             <View
               style={{
                 height: 58,
-                backgroundColor: "#C1D9FD",
+                backgroundColor: "#E6EDFB",
                 marginTop: 10,
-                borderRadius: 10,
+                borderRadius: 16,
                 paddingHorizontal: 16,
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-between",
               }}
             >
-              <Text style={{ fontFamily: "poppinsregular" }}>
-                {i18n.t("App_Version")}
+              <Text
+                style={{
+                  fontSize: 14,
+                  marginLeft: 6,
+                  color: "#596E81",
+                  fontFamily: "poppinssemibold",
+                }}
+              >
+                {i18n.t("Log_Out")}
               </Text>
               <Pressable
                 onPress={() => {
