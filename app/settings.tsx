@@ -18,10 +18,10 @@ import {
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import TextHeaderPhoenix from "../components/TextHeaderPhoenix";
 import i18n from "../assets/translations/index";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import Popup from "../components/Popup";
 
 const Setting = () => {
   const { language, changeLanguage } = useContext(LanguageContext)!;
@@ -38,6 +38,11 @@ const Setting = () => {
     borderRadius: 10,
     alignItems: "center",
   };
+
+  //Popup
+  const [showPopup, setShowPopup] = useState(false);
+  const popupText = "Are you sure you want to delete this item?";
+  const showCancelButton = true; // Set to false to hide the Cancel button
 
   const storeData = async (userDataLanguage: any) => {
     try {
@@ -67,6 +72,10 @@ const Setting = () => {
     } catch (e) {
       // error reading value
     }
+  };
+
+  const togglePopUp = () => {
+    setShowPopup(!showPopup);
   };
 
   return (
@@ -186,15 +195,25 @@ const Setting = () => {
               >
                 {i18n.t("App_Version")}
               </Text>
-              <Text
-                style={{
-                  fontFamily: "poppinssemibold",
-                  alignContent: "flex-end",
-                }}
-              >
-                1.1.0
-              </Text>
+              <Pressable onPress={togglePopUp}>
+                <Text
+                  style={{
+                    fontFamily: "poppinssemibold",
+                    alignContent: "flex-end",
+                  }}
+                >
+                  1.1.0
+                </Text>
+              </Pressable>
             </View>
+
+            {/* Pop Up */}
+            <Popup
+              visible={showPopup}
+              onClose={togglePopUp}
+              text={popupText}
+              showCancelButton={showCancelButton}
+            />
 
             {/* lOGOUT*/}
             <View
