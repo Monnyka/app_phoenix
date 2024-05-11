@@ -17,17 +17,15 @@ import { createMaterialBottomTabNavigator } from "react-native-paper/react-navig
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import CreateTask from "../Layout/CreateTask";
 import Project from "../Project";
 import i18n from "../assets/translations/index";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import "react-native-reanimated";
 
 const HomePage = () => {
   const Tab = createMaterialBottomTabNavigator();
-  const sheetRef = useRef<BottomSheet>(null);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -59,27 +57,13 @@ const HomePage = () => {
   const { language, changeLanguage } = useContext(LanguageContext)!;
   i18n.locale = language;
 
-  // variables
-  const snapPoints = useMemo(() => ["45%"], []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
   useEffect(() => {
-    //getData();
     // Add a listener for keyboard dismissal
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
-      () => {
-        // Close the BottomSheet when the keyboard is dismissed
-        sheetRef.current?.snapToIndex(0);
-      }
+      () => {}
     );
   }, []);
-
-  const openBottomSheet = () => {
-    sheetRef.current?.expand();
-  };
 
   return (
     <PaperProvider>
@@ -98,7 +82,7 @@ const HomePage = () => {
               ),
             }}
           >
-            {() => <Task onPress={openBottomSheet} />}
+            {() => <Task />}
           </Tab.Screen>
           <Tab.Screen
             name={i18n.t("Project")}
@@ -114,19 +98,6 @@ const HomePage = () => {
             }}
           />
         </Tab.Navigator>
-
-        <BottomSheet
-          ref={sheetRef}
-          index={-1}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}
-          keyboardBehavior="interactive"
-          enablePanDownToClose={true}
-        >
-          <BottomSheetView>
-            <CreateTask />
-          </BottomSheetView>
-        </BottomSheet>
       </SafeAreaProvider>
     </PaperProvider>
   );

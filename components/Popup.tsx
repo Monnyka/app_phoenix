@@ -1,7 +1,20 @@
 import React from "react";
 import { Modal, View, Text, Pressable } from "react-native";
 
-const Popup = ({ visible, onClose, text, showCancelButton }: any) => {
+const Popup = ({
+  visible,
+  onClose,
+  title,
+  message,
+  showCancelButton,
+  onOkayPress,
+  actionButtonTitle,
+}: any) => {
+  const handleOkayPress = () => {
+    onOkayPress(); // Call the onOkayPress function when Okay button is pressed
+    onClose(); // Close the pop-up
+  };
+
   return (
     <Modal
       animationType="fade"
@@ -33,12 +46,12 @@ const Popup = ({ visible, onClose, text, showCancelButton }: any) => {
               fontSize: 16,
             }}
           >
-            Deleted Task
+            {title}
           </Text>
           <Text
             style={{ marginTop: 8, fontFamily: "poppinsregular", fontSize: 12 }}
           >
-            {text}
+            {message}
           </Text>
 
           <View
@@ -48,21 +61,46 @@ const Popup = ({ visible, onClose, text, showCancelButton }: any) => {
               marginTop: 16,
             }}
           >
-            <Pressable
-              style={{
-                flex: 1,
-                width: 200,
-                backgroundColor: "#A4A4A4",
-                borderRadius: 14,
-                marginEnd: 4,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontFamily: "poppinssemibold", color: "#0F0F0F" }}>
-                Cencel
-              </Text>
-            </Pressable>
+            {showCancelButton === null || showCancelButton === undefined ? (
+              <Pressable
+                style={{
+                  flex: 1,
+                  width: 200,
+                  backgroundColor: "#2E414F",
+                  borderRadius: 14,
+                  marginEnd: 4,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={onClose}
+              >
+                <Text
+                  style={{ fontFamily: "poppinssemibold", color: "#FFFFFF" }}
+                >
+                  OK
+                </Text>
+              </Pressable>
+            ) : (
+              <Pressable
+                style={{
+                  flex: 1,
+                  width: 200,
+                  backgroundColor: "#A4A4A4",
+                  borderRadius: 14,
+                  marginEnd: 4,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={onClose}
+              >
+                <Text
+                  style={{ fontFamily: "poppinssemibold", color: "#0F0F0F" }}
+                >
+                  Cancel
+                </Text>
+              </Pressable>
+            )}
+
             {showCancelButton && (
               <Pressable
                 style={{
@@ -74,11 +112,21 @@ const Popup = ({ visible, onClose, text, showCancelButton }: any) => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                onPress={onClose}
+                onPress={handleOkayPress}
               >
-                <Text style={{ fontFamily: "poppinssemibold", color: "white" }}>
-                  Delete
-                </Text>
+                {actionButtonTitle !== undefined ? (
+                  <Text
+                    style={{ fontFamily: "poppinssemibold", color: "white" }}
+                  >
+                    {actionButtonTitle}
+                  </Text>
+                ) : (
+                  <Text
+                    style={{ fontFamily: "poppinssemibold", color: "white" }}
+                  >
+                    OK
+                  </Text>
+                )}
               </Pressable>
             )}
           </View>

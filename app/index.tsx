@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import { router } from "expo-router";
 import { ActivityIndicator } from "react-native-paper";
 import { BASE_COLOR } from "../constants/Color";
+import "react-native-reanimated";
 
 const IndexScreen = () => {
   const checkTokenAndNavigate = async () => {

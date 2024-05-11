@@ -41,7 +41,8 @@ const Setting = () => {
 
   //Popup
   const [showPopup, setShowPopup] = useState(false);
-  const popupText = "Are you sure you want to delete this item?";
+  //Popup
+  const [showPopupLogOut, setShowPopupLogOut] = useState(false);
   const showCancelButton = true; // Set to false to hide the Cancel button
 
   const storeData = async (userDataLanguage: any) => {
@@ -76,6 +77,10 @@ const Setting = () => {
 
   const togglePopUp = () => {
     setShowPopup(!showPopup);
+  };
+
+  const togglePopUpLogOut = () => {
+    setShowPopupLogOut(!showPopupLogOut);
   };
 
   return (
@@ -211,8 +216,20 @@ const Setting = () => {
             <Popup
               visible={showPopup}
               onClose={togglePopUp}
-              text={popupText}
+              title={"popupText"}
+              message="Are you sure you want to delete?"
+              //showCancelButton={false}
+            />
+
+            {/* Pop Up */}
+            <Popup
+              visible={showPopupLogOut}
+              onClose={togglePopUpLogOut}
+              title={"Log Out"}
+              message="Are you sure you want to log out?"
+              actionButtonTitle="Log Out"
               showCancelButton={showCancelButton}
+              onOkayPress={clearToken}
             />
 
             {/* lOGOUT*/}
@@ -238,11 +255,7 @@ const Setting = () => {
               >
                 {i18n.t("Log_Out")}
               </Text>
-              <Pressable
-                onPress={() => {
-                  clearToken();
-                }}
-              >
+              <Pressable onPress={togglePopUpLogOut}>
                 <Text
                   style={{
                     fontFamily: "poppinssemibold",
