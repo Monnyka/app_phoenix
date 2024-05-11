@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, View, Text, Button, Pressable } from "react-native";
+import { Modal, View, Text, Pressable } from "react-native";
 
 const Popup = ({ visible, onClose, text, showCancelButton }: any) => {
   return (
