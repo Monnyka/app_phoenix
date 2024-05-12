@@ -173,7 +173,7 @@ export default function Task({ onPress }: any) {
         color="#ffff"
         label={i18n.t("Add_Task")}
         style={styles.fab}
-        onPress={onPress}
+        onPress={() => router.push("./task_creation")}
       />
     </LinearGradient>
   );

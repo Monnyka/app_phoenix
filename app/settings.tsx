@@ -8,13 +8,7 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import {
-  Appbar,
-  Button,
-  Modal,
-  PaperProvider,
-  Portal,
-} from "react-native-paper";
+import { Appbar, Modal, PaperProvider, Portal } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import TextHeaderPhoenix from "../components/TextHeaderPhoenix";
 import i18n from "../assets/translations/index";
@@ -22,6 +16,8 @@ import { useContext, useState } from "react";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Popup from "../components/Popup";
+import Constants from "expo-constants";
+import packageJson from "../package.json";
 
 const Setting = () => {
   const { language, changeLanguage } = useContext(LanguageContext)!;
@@ -207,19 +203,10 @@ const Setting = () => {
                     alignContent: "flex-end",
                   }}
                 >
-                  1.1.0
+                  {packageJson.version}
                 </Text>
               </Pressable>
             </View>
-
-            {/* Pop Up */}
-            <Popup
-              visible={showPopup}
-              onClose={togglePopUp}
-              title={"popupText"}
-              message="Are you sure you want to delete?"
-              //showCancelButton={false}
-            />
 
             {/* Pop Up */}
             <Popup
@@ -249,22 +236,25 @@ const Setting = () => {
                 style={{
                   fontSize: 14,
                   marginLeft: 6,
-                  color: "#596E81",
+                  color: "#FF1D1D",
                   fontFamily: "poppinssemibold",
                 }}
               >
                 {i18n.t("Log_Out")}
               </Text>
-              <Pressable onPress={togglePopUpLogOut}>
-                <Text
-                  style={{
-                    fontFamily: "poppinssemibold",
-                    alignContent: "flex-end",
-                    color: "red",
-                  }}
-                >
-                  Log Out
-                </Text>
+              <Pressable
+                style={{
+                  width: 35,
+                  height: 35,
+                  justifyContent: "center",
+                  alignItems: "flex-end",
+                }}
+                onPress={togglePopUpLogOut}
+              >
+                <Image
+                  style={{ width: 25, height: 25, padding: 8 }}
+                  source={require("../assets/ic_chevron_right.png")}
+                />
               </Pressable>
             </View>
           </View>
