@@ -252,7 +252,7 @@ const Setting = () => {
                 onPress={togglePopUpLogOut}
               >
                 <Image
-                  style={{ width: 25, height: 25, padding: 8 }}
+                  style={{ width: 18, height: 18, padding: 8 }}
                   source={require("../assets/ic_chevron_right.png")}
                 />
               </Pressable>

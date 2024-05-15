@@ -1,6 +1,6 @@
 ## EAS Build preview build
 
-```cmd
+```Command: Development Build Command
 eas build -p android --profile=preview
 ```
 

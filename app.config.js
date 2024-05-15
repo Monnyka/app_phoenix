@@ -1,4 +1,4 @@
-const IS_DEV = process.env.APP_VARIANT === "preview";
+const IS_DEV = process.env.NODE_ENV !== "production";
 
 export default {
   name: IS_DEV ? "Phoenix (Dev)" : "Phoenix",
@@ -24,7 +24,6 @@ export default {
   },
   android: {
     adaptiveIcon: {
-      // foregroundImage: "./assets/adaptive-icon.png",
       foregroundImage: IS_DEV
         ? "./assets/ic_app_phoenix_dev.png"
         : "./assets/ic_app_phoenix.png",
@@ -43,6 +42,52 @@ export default {
   },
   plugins: ["expo-router", "expo-localization", "expo-font"],
 };
+
+// const IS_DEV = process.env.APP_VARIANT === "preview";
+
+// export default {
+//   name: IS_DEV ? "Phoenix (Dev)" : "Phoenix",
+//   scheme: "phoenix",
+//   slug: "phoenix",
+//   version: "1.0.0",
+//   orientation: "portrait",
+//   icon: IS_DEV
+//     ? "./assets/ic_app_phoenix_dev.png"
+//     : "./assets/ic_app_phoenix.png",
+//   userInterfaceStyle: "light",
+//   splash: {
+//     image: IS_DEV
+//       ? "./assets/ic_app_phoenix_dev.png"
+//       : "./assets/ic_app_phoenix.png",
+//     resizeMode: "contain",
+//     backgroundColor: "#ffffff",
+//   },
+//   assetBundlePatterns: ["**/*"],
+//   ios: {
+//     supportsTablet: true,
+//     bundleIdentifier: IS_DEV ? "com.nyka.Phoenix.dev" : "com.nyka.Phoenix",
+//   },
+//   android: {
+//     adaptiveIcon: {
+//       // foregroundImage: "./assets/adaptive-icon.png",
+//       foregroundImage: IS_DEV
+//         ? "./assets/ic_app_phoenix_dev.png"
+//         : "./assets/ic_app_phoenix.png",
+//       backgroundColor: "#ffffff",
+//     },
+//     package: IS_DEV ? "com.nyka.Phoenix.dev" : "com.nyka.Phoenix",
+//   },
+//   web: {
+//     favicon: "./assets/favicon.png",
+//     bundler: "metro",
+//   },
+//   extra: {
+//     eas: {
+//       projectId: "7f9a0d03-ea5f-4929-8649-ba87eb030783",
+//     },
+//   },
+//   plugins: ["expo-router", "expo-localization", "expo-font"],
+// };
 
 //old config
 // {

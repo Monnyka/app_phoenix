@@ -14,16 +14,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import callLoginApi from "../api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  Button,
-  Dialog,
-  PaperProvider,
-  Portal,
-  Snackbar,
-} from "react-native-paper";
-import MyDialog from "../components/Dialog";
+import { Button, Dialog, PaperProvider, Portal } from "react-native-paper";
 
 const login = () => {
   const [email, setEmail] = useState("");

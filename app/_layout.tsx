@@ -27,6 +27,7 @@ const RootLayout = () => {
           <Stack.Screen name="settings" options={{ headerShown: false }} />
           <Stack.Screen name="profile" options={{ headerShown: false }} />
           <Stack.Screen name="taskdetails" options={{ headerShown: false }} />
+          <Stack.Screen name="task_creation" options={{ headerShown: false }} />
         </Stack>
       </GestureHandlerRootView>
     </LanguageProvider>
