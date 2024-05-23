@@ -52,7 +52,6 @@ export default function Task({ onPress }: any) {
 
   //navigation instance
   const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
-  //const apiUrl = "https://uat.monnyka.top/api/v1/tasks";
 
   useEffect(() => {
     //getTasks();
@@ -81,7 +80,7 @@ export default function Task({ onPress }: any) {
               flexDirection: "row",
             }}
           >
-            <Pressable onPress={() => router.push("./profile")}>
+            <Pressable>
               <Avatar.Image
                 size={45}
                 source={require("./assets/pikachu.jpg")}
@@ -98,7 +97,8 @@ export default function Task({ onPress }: any) {
                 style={{
                   fontFamily: "poppinssemibold",
                   color: "#626262",
-                  fontSize: 14,
+                  fontSize: 12,
+                  marginTop: 2,
                 }}
               >
                 {i18n.t("Welcome_back_Have_a_nice_day")}

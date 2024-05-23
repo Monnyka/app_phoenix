@@ -21,12 +21,13 @@ const Project = () => {
       <SafeAreaView
         //add edges to remote the unwated padding at the bottom
         edges={["top", "left", "right"]}
-        style={{ paddingTop: 16, paddingHorizontal: 14, flex: 1 }}
+        style={{ paddingTop: 16, paddingHorizontal: 0, flex: 1 }}
       >
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
+            paddingHorizontal: 16,
           }}
         >
           <View
@@ -34,7 +35,7 @@ const Project = () => {
               flexDirection: "row",
             }}
           >
-            <Pressable onPress={() => router.push("./profile")}>
+            <Pressable>
               <Avatar.Image
                 size={45}
                 source={require("./assets/pikachu.jpg")}
@@ -49,14 +50,15 @@ const Project = () => {
             >
               <Text
                 style={{
-                  fontFamily: "montserratbold",
+                  fontFamily: "poppinssemibold",
                   color: "#626262",
                   fontSize: 12,
+                  marginTop: 2,
                 }}
               >
                 {i18n.t("Welcome_back_Have_a_nice_day")}
               </Text>
-              <Text style={{ fontFamily: "montserratbold", fontSize: 16 }}>
+              <Text style={{ fontFamily: "poppinssemibold", fontSize: 16 }}>
                 Monnyka Pin
               </Text>
             </View>
@@ -65,7 +67,9 @@ const Project = () => {
             <Avatar.Icon size={35} icon={"cog"} />
           </Pressable>
         </View>
-        <TextHeader style={{ marginTop: 30 }}>{i18n.t("Project")}</TextHeader>
+        <TextHeader style={{ marginTop: 30, paddingLeft: 16 }}>
+          {i18n.t("Project")}
+        </TextHeader>
         <View
           style={{
             flex: 1,

@@ -4,6 +4,10 @@
 eas build -p android --profile preview
 ```
 
+```Command: Development Build Command
+eas build -p android --profile release
+```
+
 ## Start Emulator
 
 ```cmd

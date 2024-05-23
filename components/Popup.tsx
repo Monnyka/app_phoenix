@@ -5,13 +5,13 @@ const Popup = ({
   visible,
   onClose,
   title,
-  message,
+  description,
   showCancelButton,
   onOkayPress,
   actionButtonTitle,
 }: any) => {
   const handleOkayPress = () => {
-    onOkayPress(); // Call the onOkayPress function when Okay button is pressed
+    if (onOkayPress) onOkayPress(); // Call the onOkayPress function when Okay button is pressed
     onClose(); // Close the pop-up
   };
 
@@ -27,7 +27,7 @@ const Popup = ({
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "rgba(0,0,0,0.6)",
+          backgroundColor: "rgba(0,0,0,0.4)",
         }}
       >
         <View
@@ -51,7 +51,7 @@ const Popup = ({
           <Text
             style={{ marginTop: 8, fontFamily: "poppinsregular", fontSize: 12 }}
           >
-            {message}
+            {description}
           </Text>
 
           <View

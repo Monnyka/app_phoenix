@@ -16,7 +16,6 @@ import { useContext, useState } from "react";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Popup from "../components/Popup";
-import Constants from "expo-constants";
 import packageJson from "../package.json";
 
 const Setting = () => {
@@ -95,7 +94,7 @@ const Setting = () => {
             <TextHeaderPhoenix>{i18n.t("Settings")}</TextHeaderPhoenix>
 
             {/* Setting Item Profile */}
-            <View
+            {/* <View
               style={{
                 height: 58,
                 backgroundColor: "#E6EDFB",
@@ -129,7 +128,7 @@ const Setting = () => {
                   View
                 </Text>
               </Pressable>
-            </View>
+            </View> */}
 
             {/* Setting Item Languge */}
             <View
@@ -213,7 +212,7 @@ const Setting = () => {
               visible={showPopupLogOut}
               onClose={togglePopUpLogOut}
               title={"Log Out"}
-              message="Are you sure you want to log out?"
+              description="Are you sure you want to log out?"
               actionButtonTitle="Log Out"
               showCancelButton={showCancelButton}
               onOkayPress={clearToken}

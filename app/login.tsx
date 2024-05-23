@@ -53,7 +53,9 @@ const login = () => {
   };
 
   const callLoginApi = async () => {
-    const apiUrl: any = "https://uat.monnyka.top/api/v1/auth/login"; // Replace 'your-api-url' with your actual API URL
+    const apiUrl: any = process.env.EXPO_PUBLIC_API_URL + "/api/v1/auth/login";
+    console.log(apiUrl);
+
     try {
       const response = await fetch(apiUrl, {
         method: "POST",

@@ -1,4 +1,4 @@
-const IS_DEV = process.env.NODE_ENV !== "production";
+const IS_DEV = process.env.APP_VARIANT === "preview";
 
 export default {
   name: IS_DEV ? "Phoenix (Dev)" : "Phoenix",

@@ -14,16 +14,16 @@
       "distribution": "internal",
       "env": {
         "APP_VARIANT": "preview",
-        "EXPO_PUBLIC_API_URL": "https://uat.monnyka.top/api/v1/tasks/"
+        "EXPO_PUBLIC_API_URL": "https://uat.monnyka.top"
       },
       "android": {
         "buildType": "apk"
       }
     },
-    "production": {
+    "release": {
       "env": {
         "APP_VARIANT": "release",
-        "EXPO_PUBLIC_API_URL": "https://prod.monnyka.top/api/v1/tasks/"
+        "EXPO_PUBLIC_API_URL": "https://prod.monnyka.top"
       },
       "android": {
         "buildType": "apk"

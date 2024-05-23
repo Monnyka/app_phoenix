@@ -1,5 +1,5 @@
 import { View, Text, StatusBar, StyleSheet, Image } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
   Appbar,
@@ -15,6 +15,7 @@ import moment from "moment";
 import i18n from "../assets/translations/index";
 import { LanguageContext, LanguageProvider } from "../LanguageContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Popup from "../components/Popup";
 
 const taskdetails = () => {
   const params = useLocalSearchParams();
@@ -34,7 +35,7 @@ const taskdetails = () => {
   const deleteTask = async (id: any) => {
     try {
       const token = await AsyncStorage.getItem("token");
-      const request = await fetch(apiUrl + "/" + id, {
+      const request = await fetch(apiUrl + "/api/v1/tasks/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -53,9 +54,8 @@ const taskdetails = () => {
     }
   };
 
-  const [visible, setVisible] = React.useState(false);
-
-  const hideDialog = () => setVisible(false);
+  //POPUP
+  const [showPopupDelete, setShowPopupDelete] = useState(false);
 
   return (
     <PaperProvider>
@@ -78,7 +78,10 @@ const taskdetails = () => {
             />
 
             {/* // <Appbar.Action icon="pencil" onPress={() => {}} /> */}
-            <Appbar.Action icon="delete" onPress={() => setVisible(true)} />
+            <Appbar.Action
+              icon="delete"
+              onPress={() => setShowPopupDelete(true)}
+            />
           </Appbar.Header>
           <StatusBar backgroundColor="#4CAF4F00" hidden={false} />
           <View style={styles.container}>
@@ -212,8 +215,17 @@ const taskdetails = () => {
               />
             </View>
           </View>
+          <Popup
+            title="Delete"
+            description="Are you sure you want to delete the task?"
+            visible={showPopupDelete}
+            actionButtonTitle="Delete"
+            showCancelButton={true}
+            onOkayPress={() => deleteTask(taskId)}
+            onClose={() => setShowPopupDelete(false)}
+          />
 
-          <Portal>
+          {/* <Portal>
             <Dialog visible={visible} onDismiss={hideDialog}>
               <Dialog.Icon icon="alert" />
               <Dialog.Title style={{ textAlign: "center" }}>
@@ -233,7 +245,7 @@ const taskdetails = () => {
                 </Button>
               </Dialog.Actions>
             </Dialog>
-          </Portal>
+          </Portal> */}
         </SafeAreaView>
       </LinearGradient>
     </PaperProvider>

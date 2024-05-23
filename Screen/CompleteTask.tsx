@@ -16,12 +16,13 @@ const CompleteTask = () => {
   const navigation = useNavigation();
 
   // const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
-  const apiUrl = "https://uat.monnyka.top/api/v1/tasks";
+  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
+  console.log(apiUrl);
 
   const getTasks = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
-      const response = await fetch(apiUrl + "?completed=true", {
+      const response = await fetch(apiUrl + "/api/v1/tasks?completed=true", {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -48,7 +49,7 @@ const CompleteTask = () => {
   const updateTask = async (id: string) => {
     try {
       const token = await AsyncStorage.getItem("token");
-      const response = await fetch(apiUrl + "/" + id, {
+      const response = await fetch(apiUrl + "/api/v1/tasks/" + id, {
         method: "PATCH",
         headers: {
           Accept: "application/json",

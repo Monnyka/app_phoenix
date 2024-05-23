@@ -20,7 +20,7 @@ const PendingTask = () => {
   const getTasks = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
-      const response = await fetch(apiUrl + "?completed=false", {
+      const response = await fetch(apiUrl + "/api/v1/tasks?completed=false", {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -47,7 +47,7 @@ const PendingTask = () => {
   const updateTask = async (id: string) => {
     try {
       const token = await AsyncStorage.getItem("token");
-      const response = await fetch(apiUrl + "/" + id, {
+      const response = await fetch(apiUrl + "/api/v1/tasks/" + id, {
         method: "PATCH",
         headers: {
           Accept: "application/json",
