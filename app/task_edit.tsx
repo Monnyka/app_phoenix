@@ -10,7 +10,7 @@ import ButtonPhoenix from "../components/ButtonPhoenix";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Popup from "../components/Popup";
 
-const TaskCreation = () => {
+const TaskEdit = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -98,7 +98,7 @@ const TaskCreation = () => {
         style={{ paddingHorizontal: 16, backgroundColor: "#FFFFFF", flex: 1 }}
       >
         <TextHeaderPhoenix style={{ marginTop: 16 }}>
-          {i18n.t("Create_Task")}
+          Edit Task
         </TextHeaderPhoenix>
         <Text
           style={{
@@ -125,7 +125,7 @@ const TaskCreation = () => {
           onChangeText={(text: any) => setDueDate(text)}
         /> */}
         <View style={{ marginTop: 16 }} />
-        <ButtonPhoenix onPress={handleCreateTask}>SAVE</ButtonPhoenix>
+        <ButtonPhoenix onPress={handleCreateTask}>UPDATE</ButtonPhoenix>
         {popupVisible && (
           <Popup
             title={popupContent.title}
@@ -143,4 +143,4 @@ const TaskCreation = () => {
   );
 };
 
-export default TaskCreation;
+export default TaskEdit;

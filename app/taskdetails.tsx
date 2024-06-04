@@ -1,13 +1,14 @@
 import { View, Text, StatusBar, StyleSheet, Image } from "react-native";
 import React, { useContext, useState } from "react";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Appbar,
   Button,
   Chip,
-  Dialog,
+  Divider,
+  Icon,
+  Menu,
   PaperProvider,
-  Portal,
 } from "react-native-paper";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
@@ -25,6 +26,9 @@ const taskdetails = () => {
   const taskCreateDate = params.taskCreateDate;
   const taskDueDate = params.taskDueDate;
   let taskStatus = params.taskStatus;
+  const [visible, setVisible] = React.useState(false);
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
 
   //Translation
   const { language, changeLanguage } = useContext(LanguageContext)!;
@@ -78,10 +82,42 @@ const taskdetails = () => {
             />
 
             {/* // <Appbar.Action icon="pencil" onPress={() => {}} /> */}
-            <Appbar.Action
-              icon="delete"
-              onPress={() => setShowPopupDelete(true)}
-            />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <Menu
+                style={{ paddingTop: 50 }}
+                visible={visible}
+                onDismiss={closeMenu}
+                anchor={
+                  <Appbar.Action
+                    icon="dots-vertical"
+                    onPress={() => setVisible(true)}
+                  />
+                }
+              >
+                <Menu.Item
+                  leadingIcon="file-edit-outline"
+                  onPress={() => {
+                    closeMenu();
+                    router.push("/task_edit");
+                  }}
+                  title="Edit"
+                />
+                <Menu.Item
+                  leadingIcon="delete"
+                  onPress={() => {
+                    closeMenu();
+                    setShowPopupDelete(true);
+                  }}
+                  title="Delete"
+                />
+                {/* <Divider /> */}
+              </Menu>
+            </View>
           </Appbar.Header>
           <StatusBar backgroundColor="#4CAF4F00" hidden={false} />
           <View style={styles.container}>
