@@ -1,15 +1,7 @@
 import { View, Text, StatusBar, StyleSheet, Image } from "react-native";
 import React, { useContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Appbar,
-  Button,
-  Chip,
-  Divider,
-  Icon,
-  Menu,
-  PaperProvider,
-} from "react-native-paper";
+import { Appbar, Chip, Menu, PaperProvider } from "react-native-paper";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
@@ -103,7 +95,14 @@ const taskdetails = () => {
                   leadingIcon="file-edit-outline"
                   onPress={() => {
                     closeMenu();
-                    router.push("/task_edit");
+                    router.replace({
+                      pathname: "/task_edit",
+                      params: {
+                        id: taskId,
+                        name: name,
+                        description: taskDescription,
+                      },
+                    });
                   }}
                   title="Edit"
                 />

@@ -2,7 +2,7 @@ import { View, Text, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Appbar } from "react-native-paper";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import InputtextPhoenix from "../components/InputtextPhoenix";
 import TextHeaderPhoenix from "../components/TextHeaderPhoenix";
 import i18n from "../assets/translations";
@@ -11,18 +11,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Popup from "../components/Popup";
 
 const TaskEdit = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const params = useLocalSearchParams();
+  const [title, setTitle] = useState(params.name + "");
+  const [description, setDescription] = useState(params.description + "");
   const [dueDate, setDueDate] = useState("");
   const [popupVisible, setPopupVisible] = useState(false);
   const [popupContent, setPopupContent] = useState({
     title: "",
     description: "",
   });
+  const id = params.id;
 
-  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL + "/api/v1/tasks";
+  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL + "/api/v1/tasks/" + id;
 
-  const handleCreateTask = async () => {
+  const handleEditTask = async () => {
     if (title.trim() === "") {
       setPopupContent({
         title: "Error",
@@ -49,7 +51,7 @@ const TaskEdit = () => {
       }
 
       const response = await fetch(apiUrl, {
-        method: "POST",
+        method: "PATCH",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -58,32 +60,32 @@ const TaskEdit = () => {
         body: JSON.stringify({
           name: title,
           description: description,
-          due_date: dueDate, // Ensure the due date is sent to the server
+          //due_date: dueDate, // Ensure the due date is sent to the server
         }),
       });
 
       if (response.ok) {
-        console.log("Task created successfully");
+        console.log("Task updated successfully");
         setPopupContent({
           title: "Success",
-          description: "This task has been created successfully.",
+          description: "This task has been updated successfully.",
         });
         setPopupVisible(true);
         // Reset the input fields after successful creation
       } else {
         const errorData = await response.json();
-        console.error("Failed to create task:", errorData);
+        console.error("Failed to update task:", errorData);
         setPopupContent({
           title: "Error",
-          description: `Failed to create task: ${errorData.message}`,
+          description: `Failed to update task: ${errorData.message}`,
         });
         setPopupVisible(true);
       }
     } catch (error) {
-      console.error("Error creating task:", error);
+      console.error("Error updating task:", error);
       setPopupContent({
         title: "Error",
-        description: `Error creating task: `,
+        description: `Error updating task: `,
       });
       setPopupVisible(true);
     }
@@ -92,7 +94,17 @@ const TaskEdit = () => {
   return (
     <SafeAreaProvider>
       <Appbar.Header style={{ backgroundColor: "white" }}>
-        <Appbar.BackAction onPress={() => router.back()} />
+        <Appbar.BackAction
+          onPress={() =>
+            router.replace({
+              pathname: "/taskdetails",
+              params: {
+                name: title,
+                taskDescription: description,
+              },
+            })
+          }
+        />
       </Appbar.Header>
       <View
         style={{ paddingHorizontal: 16, backgroundColor: "#FFFFFF", flex: 1 }}
@@ -112,11 +124,13 @@ const TaskEdit = () => {
         <View style={{ marginTop: 28 }} />
         <InputtextPhoenix
           placeholder="Title"
+          value={title}
           onChangeText={(text: any) => setTitle(text)}
         />
         <View style={{ marginTop: 16 }} />
         <InputtextPhoenix
           placeholder="Description"
+          value={description}
           onChangeText={(text: any) => setDescription(text)}
         />
         {/* <View style={{ marginTop: 16 }} /> */}
@@ -125,7 +139,7 @@ const TaskEdit = () => {
           onChangeText={(text: any) => setDueDate(text)}
         /> */}
         <View style={{ marginTop: 16 }} />
-        <ButtonPhoenix onPress={handleCreateTask}>UPDATE</ButtonPhoenix>
+        <ButtonPhoenix onPress={handleEditTask}>UPDATE</ButtonPhoenix>
         {popupVisible && (
           <Popup
             title={popupContent.title}
@@ -133,7 +147,10 @@ const TaskEdit = () => {
             onClose={() => {
               setPopupVisible(false);
               if (popupContent.title == "Success") {
-                router.back();
+                router.replace({
+                  pathname: "/taskdetails",
+                  params: { name: title, taskDescription: description },
+                });
               }
             }}
           />
