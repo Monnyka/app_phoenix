@@ -13,6 +13,8 @@ import Popup from "../components/Popup";
 const taskdetails = () => {
   const params = useLocalSearchParams();
   const taskId = params.id;
+  console.log(taskId);
+
   const name = params.name;
   const taskDescription = params.taskDescription;
   const taskCreateDate = params.taskCreateDate;

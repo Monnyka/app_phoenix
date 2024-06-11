@@ -13,16 +13,21 @@ import Popup from "../components/Popup";
 const TaskEdit = () => {
   const params = useLocalSearchParams();
   const [title, setTitle] = useState(params.name + "");
+  const [updateTitle, setUpdateTitle] = useState(params.name + "");
   const [description, setDescription] = useState(params.description + "");
+  const [updateDescription, setUpdateDescription] = useState(
+    params.description + ""
+  );
   const [dueDate, setDueDate] = useState("");
   const [popupVisible, setPopupVisible] = useState(false);
   const [popupContent, setPopupContent] = useState({
     title: "",
     description: "",
   });
-  const id = params.id;
+  const taskId = params.id;
 
-  const apiUrl: any = process.env.EXPO_PUBLIC_API_URL + "/api/v1/tasks/" + id;
+  const apiUrl: any =
+    process.env.EXPO_PUBLIC_API_URL + "/api/v1/tasks/" + taskId;
 
   const handleEditTask = async () => {
     if (title.trim() === "") {
@@ -58,7 +63,7 @@ const TaskEdit = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          name: title,
+          name: updateTitle,
           description: description,
           //due_date: dueDate, // Ensure the due date is sent to the server
         }),
@@ -66,6 +71,8 @@ const TaskEdit = () => {
 
       if (response.ok) {
         console.log("Task updated successfully");
+        setTitle(updateTitle);
+        setDescription(updateDescription);
         setPopupContent({
           title: "Success",
           description: "This task has been updated successfully.",
@@ -101,6 +108,7 @@ const TaskEdit = () => {
               params: {
                 name: title,
                 taskDescription: description,
+                id: taskId,
               },
             })
           }
@@ -124,14 +132,14 @@ const TaskEdit = () => {
         <View style={{ marginTop: 28 }} />
         <InputtextPhoenix
           placeholder="Title"
-          value={title}
-          onChangeText={(text: any) => setTitle(text)}
+          value={updateTitle}
+          onChangeText={(text: any) => setUpdateTitle(text)}
         />
         <View style={{ marginTop: 16 }} />
         <InputtextPhoenix
           placeholder="Description"
-          value={description}
-          onChangeText={(text: any) => setDescription(text)}
+          value={updateDescription}
+          onChangeText={(text: any) => setUpdateDescription(text)}
         />
         {/* <View style={{ marginTop: 16 }} /> */}
         {/* <InputtextPhoenix
@@ -149,7 +157,11 @@ const TaskEdit = () => {
               if (popupContent.title == "Success") {
                 router.replace({
                   pathname: "/taskdetails",
-                  params: { name: title, taskDescription: description },
+                  params: {
+                    name: title,
+                    taskDescription: description,
+                    id: taskId,
+                  },
                 });
               }
             }}
