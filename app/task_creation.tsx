@@ -9,6 +9,7 @@ import i18n from "../assets/translations";
 import ButtonPhoenix from "../components/ButtonPhoenix";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Popup from "../components/Popup";
+import InputTextMultiPhoenix from "../components/InputTextMultiPheonix";
 
 const TaskCreation = () => {
   const [title, setTitle] = useState("");
@@ -115,7 +116,7 @@ const TaskCreation = () => {
           onChangeText={(text: any) => setTitle(text)}
         />
         <View style={{ marginTop: 16 }} />
-        <InputtextPhoenix
+        <InputTextMultiPhoenix
           placeholder="Description"
           onChangeText={(text: any) => setDescription(text)}
         />

@@ -72,7 +72,7 @@ const PendingTask = () => {
   };
 
   useEffect(() => {
-    getTasks();
+    getTasks;
   }, []);
 
   //Using the react-navigation library
@@ -95,7 +95,7 @@ const PendingTask = () => {
                 id: item._id,
                 name: item.name,
                 taskDescription: item.description,
-                taskCreateDate: item.createDate,
+                taskCreateDate: item.createdAt,
                 taskDueDate: item.dueDate,
                 taskStatus: item.completed,
               },

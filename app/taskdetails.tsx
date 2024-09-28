@@ -13,8 +13,6 @@ import Popup from "../components/Popup";
 const taskdetails = () => {
   const params = useLocalSearchParams();
   const taskId = params.id;
-  console.log(taskId);
-
   const name = params.name;
   const taskDescription = params.taskDescription;
   const taskCreateDate = params.taskCreateDate;
@@ -185,27 +183,29 @@ const taskdetails = () => {
                 >
                   {moment(taskCreateDate).format("DD MMM, YYYY")}
                 </Text>
-
-                <Text
-                  style={{
-                    fontFamily: "poppinssemibold",
-                    fontSize: 14,
-                    color: "#959595",
-                    marginTop: 8,
-                  }}
-                >
-                  {i18n.t("Due_Date")}
-                </Text>
-
-                <Text
-                  style={{
-                    fontFamily: "poppinsregular",
-                    fontSize: 14,
-                    color: "#414141",
-                  }}
-                >
-                  {moment(taskDueDate).format("DD MMM, YYYY")}
-                </Text>
+                {taskDueDate ? (
+                  <>
+                    <Text
+                      style={{
+                        fontFamily: "poppinssemibold",
+                        fontSize: 14,
+                        color: "#959595",
+                        marginTop: 8,
+                      }}
+                    >
+                      {i18n.t("Due_Date")}
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: "poppinsregular",
+                        fontSize: 14,
+                        color: "#414141",
+                      }}
+                    >
+                      {moment(taskDueDate).format("DD MMM, YYYY")}
+                    </Text>
+                  </>
+                ) : null}
 
                 <Text
                   style={{

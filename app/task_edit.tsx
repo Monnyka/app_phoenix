@@ -9,6 +9,7 @@ import i18n from "../assets/translations";
 import ButtonPhoenix from "../components/ButtonPhoenix";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Popup from "../components/Popup";
+import InputTextMultiPhoenix from "../components/InputTextMultiPheonix";
 
 const TaskEdit = () => {
   const params = useLocalSearchParams();
@@ -136,7 +137,8 @@ const TaskEdit = () => {
           onChangeText={(text: any) => setUpdateTitle(text)}
         />
         <View style={{ marginTop: 16 }} />
-        <InputtextPhoenix
+
+        <InputTextMultiPhoenix
           placeholder="Description"
           value={updateDescription}
           onChangeText={(text: any) => setUpdateDescription(text)}

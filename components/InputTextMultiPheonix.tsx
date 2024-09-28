@@ -1,42 +1,38 @@
 import React from "react";
 import { TextInput, StyleSheet } from "react-native";
 
-const InputtextPhoenix = ({
+const InputTextMultiPhoenix = ({
   placeholder = "Enter text...",
-  secureTextEntry = false,
-  multiline,
-  numberOfLines,
-  onChangeText,
+  multiline = true,
+  numberOfLines = 3, // Default to 4 lines if multiline is true
   ...props
-}: any) => {
+}) => {
   return (
     <TextInput
       style={[styles.input]}
-      onChangeText={onChangeText}
       placeholder={placeholder}
-      secureTextEntry={secureTextEntry}
-      textContentType={secureTextEntry ? "password" : "none"}
       selectionColor={"#596E81"}
-      placeholderTextColor="#596E81"
-      {...props}
+      placeholderTextColor="red"
       multiline={multiline}
-      numberOfLines={numberOfLines}
+      numberOfLines={multiline ? numberOfLines : undefined}
+      {...props}
     />
   );
 };
 
 const styles = StyleSheet.create({
   input: {
-    height: 50,
+    height: "auto",
     borderWidth: 1,
     borderRadius: 16,
     borderColor: "#959595",
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 15,
     fontFamily: "poppinssemibold",
     fontSize: 12,
     color: "#2E414F",
+    alignSelf: "stretch",
   },
 });
 
-export default InputtextPhoenix;
+export default InputTextMultiPhoenix;

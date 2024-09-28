@@ -29,6 +29,10 @@ const RootLayout = () => {
           <Stack.Screen name="taskdetails" options={{ headerShown: false }} />
           <Stack.Screen name="task_creation" options={{ headerShown: false }} />
           <Stack.Screen name="task_edit" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="project_details"
+            options={{ headerShown: false }}
+          />
         </Stack>
       </GestureHandlerRootView>
     </LanguageProvider>
