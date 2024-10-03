@@ -5,18 +5,19 @@ import { router, useLocalSearchParams } from "expo-router";
 import { Checkbox, PaperProvider, TouchableRipple } from "react-native-paper";
 import moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, ScrollView } from "react-native-gesture-handler";
+import Loading from "../components/Loading";
 
 const project_details = () => {
   const [data, setData]: any = useState([]);
   const apiUrl: any = process.env.EXPO_PUBLIC_API_URL;
   const [checked, setChecked] = React.useState(false);
+  const [isLoading, setLoading]: any = useState(true);
   const params = useLocalSearchParams();
   const projectID = params.id;
 
   const getProjectDetails = async () => {
     try {
-      console.log("called");
       const token = await AsyncStorage.getItem("token");
       const response = await fetch(apiUrl + "/api/v1/projects/" + projectID, {
         headers: {
@@ -33,8 +34,45 @@ const project_details = () => {
       }
       const json = await response.json();
       setData(json.project);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching project:", error);
+    }
+  };
+
+  // Function to toggle task completion status
+  const toggleTaskCompletion = (taskId: any) => {
+    setData((prevData: any): any => {
+      const updatedTasks = prevData.tasks.map((task: any) =>
+        task._id === taskId ? { ...task, completed: !task.completed } : task
+      );
+      return { ...prevData, tasks: updatedTasks };
+    });
+  };
+
+  const updateTask = async (id: string) => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      const response = await fetch(apiUrl + "/api/v1/tasks/" + id, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          completed: true,
+        }),
+      });
+
+      if (response.ok) {
+        console.log("Task updated successfully");
+        // Reset the input fields after successful creation
+      } else {
+        console.error("Failed to update task");
+      }
+    } catch (error) {
+      console.error("Error update task:", error);
     }
   };
 
@@ -56,7 +94,7 @@ const project_details = () => {
             });
           }}
           borderless
-          style={{ padding: 16, borderRadius: 16 }}
+          style={{ padding: 8, borderRadius: 16 }}
         >
           <View>
             {/* Title task item */}
@@ -64,15 +102,20 @@ const project_details = () => {
               style={{
                 flexDirection: "row",
                 alignItems: "center",
-                //backgroundColor: "#458989",
+                //backgroundColor: "#01044B",
                 paddingEnd: 25,
               }}
             >
               <Checkbox.Android
-                status={checked ? "checked" : "unchecked"}
-                onPress={() => {
-                  console.log("Item is clicked " + item._id);
-                }}
+                status={item.completed ? "checked" : "unchecked"}
+                color="#01044B"
+                onPress={
+                  () => {
+                    console.log("Item is clicked " + item._id);
+                    toggleTaskCompletion(item._id);
+                    updateTask(item._id);
+                  } // Toggle the checkbox state
+                }
               />
               <Text
                 style={{
@@ -118,35 +161,71 @@ const project_details = () => {
   return (
     <PaperProvider>
       <AppBar />
-      <View style={styles.container}>
-        <Text style={styles.title}>{data.name}</Text>
-        <Text style={styles.label}>Description</Text>
-        <Text style={styles.desciption}>{data.description}</Text>
-        <View style={{ flexDirection: "row", marginTop: 20 }}>
-          <Image
-            style={{ width: 30, height: 30, marginEnd: 14 }}
-            source={require("../assets/icon.png")}
+      {!isLoading ? (
+        <ScrollView style={styles.container}>
+          <Text style={styles.title}>{data.name}</Text>
+          <Text style={styles.label}>Description</Text>
+          <Text style={styles.desciption}>{data.description}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 20,
+              alignItems: "center",
+            }}
+          >
+            <Image
+              style={{ width: 28, height: 28, marginEnd: 10 }}
+              source={require("../assets/ic_calendar.png")}
+            />
+            <Text style={styles.desciption}>
+              Create Date:
+              {moment(data.createdAt).format(" DD MMM, YYYY")}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 10,
+              alignItems: "center",
+            }}
+          >
+            <Image
+              style={{ width: 28, height: 28, marginEnd: 10 }}
+              source={require("../assets/ic_calendar.png")}
+            />
+            <Text style={styles.desciption}>
+              Due Date:
+              {moment(data.dueDate).format(" DD MMM, YYYY")}
+            </Text>
+          </View>
+          <View
+            style={{
+              backgroundColor: "#F4F4F4",
+              marginTop: 16,
+              borderRadius: 16,
+              padding: 14,
+              alignContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Text style={styles.labelTop}>Project Progress</Text>
+            <Text style={styles.desciption}>
+              Latest Update: {moment(data.updatedAt).format("DD MMM, YYYY")}
+            </Text>
+          </View>
+          <Text style={styles.label}>Tasks</Text>
+          <FlatList
+            data={data.tasks}
+            renderItem={renderItem}
+            scrollEnabled={false}
+            keyExtractor={(item) => item._id}
+            contentContainerStyle={{ paddingBottom: 50 }}
+            ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
           />
-          <Text style={styles.desciption}>
-            {moment(data.createdAt).format("DD MMM, YYYY")}
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row", marginTop: 10 }}>
-          <Image
-            style={{ width: 30, height: 30, marginEnd: 14 }}
-            source={require("../assets/icon.png")}
-          />
-          <Text style={styles.desciption}>
-            {moment(data.dueDate).format("DD MMM, YYYY")}
-          </Text>
-        </View>
-        <Text style={styles.label}>Tasks</Text>
-        <FlatList
-          data={data.tasks}
-          renderItem={renderItem}
-          ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
-        />
-      </View>
+        </ScrollView>
+      ) : (
+        <Loading />
+      )}
     </PaperProvider>
   );
 };
@@ -164,7 +243,13 @@ const styles = StyleSheet.create({
     fontFamily: "poppinssemibold",
     fontSize: 14,
     color: "#01044B",
-    marginTop: 20,
+    marginTop: 16,
+    marginBottom: 10,
+  },
+  labelTop: {
+    fontFamily: "poppinssemibold",
+    fontSize: 14,
+    color: "#01044B",
     marginBottom: 10,
   },
   desciption: {

@@ -161,7 +161,7 @@ const taskdetails = () => {
                 style={{
                   backgroundColor: "#F2F2F2",
                   marginTop: 16,
-                  padding: 18,
+                  padding: 14,
                   borderRadius: 16,
                 }}
               >

@@ -72,7 +72,7 @@ const PendingTask = () => {
   };
 
   useEffect(() => {
-    getTasks;
+    getTasks();
   }, []);
 
   //Using the react-navigation library
@@ -102,7 +102,7 @@ const PendingTask = () => {
             });
           }}
           borderless
-          style={{ padding: 16, borderRadius: 16 }}
+          style={{ padding: 8, borderRadius: 16 }}
         >
           <View>
             {/* Title task item */}
@@ -111,7 +111,6 @@ const PendingTask = () => {
                 flexDirection: "row",
                 alignItems: "center",
                 //backgroundColor: "#458989",
-                paddingEnd: 25,
               }}
             >
               <Checkbox.Android
